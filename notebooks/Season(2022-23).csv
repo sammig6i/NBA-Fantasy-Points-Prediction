@@ -1,1 +1,246 @@
-Date,Name,Team,MP,FG,FGA,FG%,3P,3PA,3P%,FT,FTA,FT%,ORB,DRB,TRB,AST,STL,BLK,TOV,PF,PTS,+-
+Date,Name,Team,MP,FG,FGA,FG%,3P,3PA,3P%,FT,FTA,FT%,ORB,DRB,TRB,AST,STL,BLK,TOV,PF,PTS,GmSc,+-
+20221018,tyrese maxey,Philadelphia 76ers,38:11,8,16,.500,2,5,.400,3,3,1.000,0,1,1,2,2,0,1,5,21,13.7,-6
+20221018,james harden,Philadelphia 76ers,37:17,9,14,.643,5,9,.556,12,12,1.000,0,8,8,7,0,0,3,3,35,31.9,+1
+20221018,joel embiid,Philadelphia 76ers,37:16,9,18,.500,1,6,.167,7,9,.778,1,14,15,5,0,1,6,4,26,17.7,-13
+20221018,tobias harris,Philadelphia 76ers,34:14,7,14,.500,3,6,.500,1,2,.500,1,1,2,0,3,0,0,3,18,13.4,-1
+20221018,p.j. tucker,Philadelphia 76ers,33:01,3,5,.600,0,2,.000,0,0,0,2,2,4,0,0,1,2,2,6,3.6,-6
+20221018,de'anthony melton,Philadelphia 76ers,20:33,2,4,.500,1,2,.500,0,0,0,0,0,0,0,1,0,0,2,5,3.2,-13
+20221018,danuel house jr.,Philadelphia 76ers,16:12,0,2,.000,0,1,.000,1,2,.500,0,1,1,1,2,0,1,2,1,0.4,-5
+20221018,georges niang,Philadelphia 76ers,12:09,1,4,.250,1,3,.333,0,0,0,0,0,0,1,0,0,0,1,3,0.9,-5
+20221018,montrezl harrell,Philadelphia 76ers,10:44,1,3,.333,0,0,0,0,0,0,0,0,0,0,0,1,1,3,2,-1.2,+4
+20221018,matisse thybulle,Philadelphia 76ers,0:23,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0,-1
+20221018,furkan korkmaz,Philadelphia 76ers,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221018,shake milton,Philadelphia 76ers,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221018,paul reed,Philadelphia 76ers,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221018,jaden springer,Philadelphia 76ers,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221018,jayson tatum,Boston Celtics,38:38,13,20,.650,2,7,.286,7,9,.778,0,12,12,4,1,1,3,1,35,30.1,+10
+20221018,jaylen brown,Boston Celtics,38:34,14,24,.583,4,12,.333,3,3,1.000,0,3,3,2,2,1,4,1,35,24.4,+7
+20221018,marcus smart,Boston Celtics,36:05,3,8,.375,1,4,.250,7,8,.875,1,2,3,7,1,0,1,3,14,14.2,0
+20221018,derrick white,Boston Celtics,24:02,1,3,.333,0,1,.000,0,1,.000,1,2,3,4,1,0,1,2,2,3.2,+9
+20221018,al horford,Boston Celtics,23:06,2,7,.286,2,5,.400,0,0,0,1,4,5,1,0,0,0,4,6,2.9,+8
+20221018,grant williams,Boston Celtics,23:57,5,5,1.000,3,3,1.000,2,3,.667,0,1,1,1,0,0,0,3,15,12.9,-3
+20221018,malcolm brogdon,Boston Celtics,23:52,7,11,.636,0,2,.000,2,2,1.000,1,1,2,4,2,0,1,2,16,15.1,+9
+20221018,noah vonleh,Boston Celtics,20:10,1,2,.500,0,0,0,0,0,0,0,2,2,0,1,1,0,4,2,1.7,+7
+20221018,blake griffin,Boston Celtics,8:17,0,2,.000,0,1,.000,1,2,.500,2,3,5,1,0,0,0,3,1,1.0,-5
+20221018,sam hauser,Boston Celtics,3:19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,-0.4,+3
+20221018,jd davison,Boston Celtics,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221018,justin jackson,Boston Celtics,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221018,mfiondu kabengele,Boston Celtics,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221018,luke kornet,Boston Celtics,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221018,payton pritchard,Boston Celtics,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221101,zach lavine,Chicago Bulls,37:13,10,21,.476,5,11,.455,4,4,1.000,1,2,3,5,0,0,1,2,29,21.3,+7
+20221101,ayo dosunmu,Chicago Bulls,33:01,7,11,.636,1,4,.250,2,2,1.000,0,3,3,4,3,0,2,2,17,16.0,+12
+20221101,demar derozan,Chicago Bulls,32:45,8,21,.381,1,2,.500,3,3,1.000,0,4,4,1,3,0,1,2,20,11.6,-1
+20221101,nikola vucevic,Chicago Bulls,31:56,3,8,.375,0,1,.000,1,2,.500,3,12,15,2,1,0,1,2,7,8.5,+5
+20221101,patrick williams,Chicago Bulls,29:58,5,10,.500,0,3,.000,2,2,1.000,3,4,7,1,1,2,3,2,12,9.6,-8
+20221101,alex caruso,Chicago Bulls,25:01,1,4,.250,1,2,.500,1,2,.500,0,4,4,4,0,0,0,1,4,4.8,+11
+20221101,goran dragic,Chicago Bulls,19:30,4,8,.500,4,6,.667,3,4,.750,0,2,2,2,0,1,1,0,15,12.3,+7
+20221101,derrick jones jr.,Chicago Bulls,16:04,1,4,.250,0,1,.000,2,2,1.000,3,1,4,1,0,1,0,0,4,5.4,+4
+20221101,javonte green,Chicago Bulls,14:32,0,2,.000,0,0,0,0,0,0,1,1,2,0,0,0,0,2,0,-1.2,+8
+20221101,tony bradley,Chicago Bulls,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221101,malcolm hill,Chicago Bulls,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221101,marko simonovic,Chicago Bulls,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221101,dalen terry,Chicago Bulls,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221101,kevin durant,Brooklyn Nets,37:59,9,16,.563,2,4,.500,12,12,1.000,0,9,9,6,1,2,7,3,32,25.5,-7
+20221101,nic claxton,Brooklyn Nets,34:35,4,4,1.000,0,0,0,2,4,.500,0,10,10,2,0,1,3,2,10,9.3,-4
+20221101,royce o'neale,Brooklyn Nets,33:42,8,12,.667,4,6,.667,0,0,0,2,3,5,3,1,0,1,3,20,18.0,-11
+20221101,kyrie irving,Brooklyn Nets,32:46,2,12,.167,0,6,.000,0,0,0,0,6,6,7,0,1,3,4,4,-0.8,-14
+20221101,joe harris,Brooklyn Nets,21:13,3,8,.375,2,7,.286,0,2,.000,0,2,2,2,0,0,1,1,8,3.4,-4
+20221101,yuta watanabe,Brooklyn Nets,27:48,4,6,.667,2,3,.667,0,0,0,2,2,4,0,0,2,0,0,10,10.8,-12
+20221101,edmond sumner,Brooklyn Nets,21:58,2,6,.333,0,1,.000,0,0,0,0,1,1,5,0,1,1,2,4,3.3,+1
+20221101,david duke jr.,Brooklyn Nets,18:42,1,4,.250,0,1,.000,0,0,0,0,0,0,2,2,0,2,2,2,0.2,+6
+20221101,patty mills,Brooklyn Nets,9:39,3,6,.500,2,4,.500,1,1,1.000,0,1,1,0,0,0,0,3,9,5.1,-4
+20221101,kessler edwards,Brooklyn Nets,0:49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0,+2
+20221101,cam thomas,Brooklyn Nets,0:49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0,+2
+20221101,markieff morris,Brooklyn Nets,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221101,day'ron sharpe,Brooklyn Nets,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221201,luka doncic,Dallas Mavericks,41:02,13,25,.520,7,14,.500,2,6,.333,0,5,5,10,3,0,3,3,35,28.4,-13
+20221201,tim hardaway jr.,Dallas Mavericks,40:14,9,20,.450,6,14,.429,2,4,.500,2,3,5,2,2,1,0,4,26,19.6,0
+20221201,dorian finney-smith,Dallas Mavericks,31:46,2,5,.400,2,4,.500,0,0,0,0,2,2,2,1,0,1,2,6,4.5,-9
+20221201,spencer dinwiddie,Dallas Mavericks,27:50,0,2,.000,0,1,.000,2,4,.500,0,0,0,6,0,1,1,0,2,3.7,+7
+20221201,dwight powell,Dallas Mavericks,17:32,3,3,1.000,0,0,0,1,4,.250,0,1,1,0,0,1,4,4,7,0.3,-2
+20221201,christian wood,Dallas Mavericks,34:35,10,13,.769,1,2,.500,4,6,.667,1,7,8,3,0,0,2,3,25,20.8,-9
+20221201,maxi kleber,Dallas Mavericks,32:09,4,8,.500,2,5,.400,0,0,0,0,3,3,1,0,4,1,3,10,8.2,-4
+20221201,reggie bullock,Dallas Mavericks,22:14,2,4,.500,1,3,.333,1,2,.500,0,4,4,0,1,0,0,1,6,5.4,+8
+20221201,josh green,Dallas Mavericks,15:08,3,5,.600,0,2,.000,0,0,0,1,1,2,1,1,0,1,4,6,3.8,-5
+20221201,davis bertans,Dallas Mavericks,2:30,0,1,.000,0,1,.000,2,3,.667,0,0,0,0,0,0,0,0,2,0.9,-3
+20221201,jaden hardy,Dallas Mavericks,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221201,javale mcgee,Dallas Mavericks,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221201,frank ntilikina,Dallas Mavericks,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221201,theo pinson,Dallas Mavericks,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221201,bojan bogdanovic,Detroit Pistons,41:11,10,14,.714,5,6,.833,5,6,.833,0,4,4,4,2,0,2,3,30,26.6,+14
+20221201,isaiah stewart,Detroit Pistons,36:34,4,12,.333,1,4,.250,0,0,0,3,9,12,3,0,0,1,2,9,7.3,+8
+20221201,marvin bagley iii,Detroit Pistons,34:14,7,10,.700,1,2,.500,4,6,.667,4,9,13,2,1,0,1,3,19,19.7,+10
+20221201,killian hayes,Detroit Pistons,32:59,10,13,.769,2,4,.500,0,0,0,0,4,4,8,0,0,2,5,22,19.7,+9
+20221201,isaiah livers,Detroit Pistons,6:52,2,2,1.000,2,2,1.000,0,0,0,0,0,0,0,0,0,1,1,6,4.0,-3
+20221201,jaden ivey,Detroit Pistons,35:06,6,15,.400,2,7,.286,2,4,.500,1,2,3,6,1,0,4,2,16,8.8,+3
+20221201,alec burks,Detroit Pistons,19:48,4,11,.364,1,6,.167,1,2,.500,0,6,6,1,2,0,0,2,10,7.2,0
+20221201,saddiq bey,Detroit Pistons,18:33,2,7,.286,1,3,.333,1,2,.500,2,3,5,1,0,0,0,2,6,3.7,+2
+20221201,jalen duren,Detroit Pistons,18:24,5,7,.714,0,0,0,1,4,.250,1,1,2,0,2,0,1,2,11,8.1,-4
+20221201,kevin knox,Detroit Pistons,11:49,1,1,1.000,0,0,0,0,0,0,1,1,2,1,1,0,0,3,2,3.2,-8
+20221201,cory joseph,Detroit Pistons,9:30,0,2,.000,0,1,.000,0,0,0,1,0,1,3,0,0,1,1,0,0.0,-1
+20221201,hamidou diallo,Detroit Pistons,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221201,rodney mcgruder,Detroit Pistons,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20221201,nerlens noel,Detroit Pistons,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230101,jayson tatum,Boston Celtics,35:31,7,16,.438,0,4,.000,11,14,.786,0,7,7,6,2,0,5,1,25,18.3,-15
+20230101,jaylen brown,Boston Celtics,34:13,12,20,.600,4,8,.500,2,2,1.000,2,6,8,3,1,0,0,3,30,25.9,-7
+20230101,marcus smart,Boston Celtics,31:19,2,12,.167,0,4,.000,0,0,0,2,3,5,7,1,0,1,3,4,2.4,-3
+20230101,al horford,Boston Celtics,30:06,3,10,.300,2,6,.333,0,0,0,2,4,6,3,0,1,0,0,8,7.6,-7
+20230101,derrick white,Boston Celtics,23:13,5,9,.556,2,5,.400,1,2,.500,0,1,1,3,1,1,1,1,13,11.0,-14
+20230101,grant williams,Boston Celtics,27:31,2,4,.500,0,1,.000,5,5,1.000,2,3,5,1,1,1,2,3,9,8.5,-12
+20230101,malcolm brogdon,Boston Celtics,19:35,1,6,.167,0,3,.000,2,2,1.000,0,2,2,4,1,0,1,1,4,3.2,-13
+20230101,robert williams,Boston Celtics,18:45,4,4,1.000,0,0,0,0,0,0,2,4,6,1,0,0,2,2,8,7.3,-2
+20230101,sam hauser,Boston Celtics,11:27,2,3,.667,1,2,.500,0,0,0,0,0,0,0,0,0,0,0,5,3.7,+5
+20230101,luke kornet,Boston Celtics,2:05,2,2,1.000,0,0,0,0,0,0,0,0,0,0,0,0,0,1,4,3.0,+2
+20230101,payton pritchard,Boston Celtics,2:05,0,0,0,0,0,0,1,2,.500,0,0,0,0,0,0,1,0,1,-0.4,+2
+20230101,justin jackson,Boston Celtics,2:05,0,1,.000,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,1.7,+2
+20230101,noah vonleh,Boston Celtics,2:05,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0.3,+2
+20230101,blake griffin,Boston Celtics,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230101,aaron gordon,Denver Nuggets,36:58,6,13,.462,1,2,.500,5,6,.833,1,5,6,7,2,1,2,1,18,18.3,+23
+20230101,michael porter jr.,Denver Nuggets,32:36,7,13,.538,3,7,.429,2,2,1.000,0,4,4,2,0,1,3,1,19,12.6,+11
+20230101,nikola jokic,Denver Nuggets,32:02,10,13,.769,2,2,1.000,8,8,1.000,0,12,12,12,1,0,0,1,30,37.5,+14
+20230101,bruce brown,Denver Nuggets,30:21,8,14,.571,4,6,.667,1,1,1.000,0,3,3,2,1,1,3,1,21,15.0,+5
+20230101,kentavious caldwell-pope,Denver Nuggets,29:45,2,7,.286,2,3,.667,0,0,0,0,3,3,4,1,0,1,4,6,4.0,+6
+20230101,christian braun,Denver Nuggets,25:21,1,1,1.000,0,0,0,0,0,0,0,2,2,0,0,0,1,1,2,0.9,+7
+20230101,bones hyland,Denver Nuggets,19:09,7,12,.583,3,7,.429,0,1,.000,0,2,2,4,0,0,4,3,17,9.2,+5
+20230101,vlatko cancar,Denver Nuggets,16:32,3,4,.750,2,3,.667,0,0,0,0,1,1,0,0,0,0,4,8,5.1,-4
+20230101,zeke nnaji,Denver Nuggets,12:22,1,1,1.000,0,0,0,0,0,0,0,1,1,0,0,1,0,1,2,2.3,+5
+20230101,davon reed,Denver Nuggets,1:38,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0.3,-4
+20230101,ish smith,Denver Nuggets,1:38,0,1,.000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-0.7,-4
+20230101,jack white,Denver Nuggets,1:38,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0,-4
+20230101,deandre jordan,Denver Nuggets,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230201,damian lillard,Portland Trail Blazers,39:52,11,22,.500,5,13,.385,15,16,.938,1,7,8,10,0,1,2,2,42,38.3,+6
+20230201,anfernee simons,Portland Trail Blazers,32:40,10,18,.556,3,7,.429,3,3,1.000,0,2,2,4,0,0,3,4,26,16.2,+11
+20230201,josh hart,Portland Trail Blazers,31:50,0,4,.000,0,2,.000,0,0,0,0,2,2,2,0,0,1,2,0,-2.6,+1
+20230201,jerami grant,Portland Trail Blazers,19:52,6,12,.500,1,3,.333,5,5,1.000,0,3,3,1,0,1,0,0,18,14.3,-8
+20230201,jusuf nurkic,Portland Trail Blazers,2:29,0,1,.000,0,1,.000,0,0,0,0,1,1,1,0,0,1,1,0,-1.1,-5
+20230201,gary payton ii,Portland Trail Blazers,28:51,2,5,.400,1,2,.500,2,2,1.000,3,1,4,0,1,1,1,5,7,5.4,+13
+20230201,drew eubanks,Portland Trail Blazers,23:48,5,7,.714,0,0,0,1,1,1.000,4,7,11,3,1,1,2,5,11,12.8,+9
+20230201,trendon watford,Portland Trail Blazers,21:43,2,6,.333,1,1,1.000,0,0,0,0,3,3,2,0,1,2,0,5,2.6,+6
+20230201,shaedon sharpe,Portland Trail Blazers,19:24,3,6,.500,3,5,.600,0,0,0,0,2,2,0,0,0,0,3,9,5.4,+11
+20230201,nassir little,Portland Trail Blazers,13:30,1,3,.333,0,2,.000,0,0,0,1,3,4,1,1,0,1,0,2,2.6,+9
+20230201,jabari walker,Portland Trail Blazers,6:01,1,3,.333,0,0,0,0,0,0,0,1,1,0,0,0,0,0,2,0.6,-3
+20230201,john butler,Portland Trail Blazers,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230201,keon johnson,Portland Trail Blazers,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230201,dillon brooks,Memphis Grizzlies,38:10,4,9,.444,1,6,.167,0,0,0,0,1,1,2,1,0,0,5,9,5.0,-6
+20230201,ja morant,Memphis Grizzlies,34:22,8,16,.500,3,7,.429,13,18,.722,2,7,9,12,1,0,5,2,32,29.1,-6
+20230201,jaren jackson jr.,Memphis Grizzlies,33:45,9,14,.643,0,3,.000,0,0,0,0,7,7,0,0,6,0,3,18,16.9,+2
+20230201,xavier tillman sr.,Memphis Grizzlies,27:53,1,4,.250,0,0,0,2,3,.667,4,6,10,5,4,0,2,2,4,10.5,+12
+20230201,desmond bane,Memphis Grizzlies,25:32,7,16,.438,2,7,.286,1,1,1.000,0,0,0,3,1,1,3,4,17,7.8,-10
+20230201,ziaire williams,Memphis Grizzlies,18:50,2,5,.400,1,4,.250,0,0,0,0,1,1,0,0,0,0,1,5,2.2,-2
+20230201,santi aldama,Memphis Grizzlies,17:32,5,7,.714,0,2,.000,0,0,0,0,2,2,0,0,0,0,0,10,7.7,-15
+20230201,tyus jones,Memphis Grizzlies,17:14,1,6,.167,1,4,.250,3,4,.750,0,3,3,3,0,0,1,0,6,3.8,-4
+20230201,brandon clarke,Memphis Grizzlies,16:50,3,6,.500,0,0,0,2,2,1.000,5,2,7,2,0,0,0,3,8,9.3,-19
+20230201,danny green,Memphis Grizzlies,9:52,1,4,.250,1,4,.250,0,0,0,1,3,4,1,1,0,1,2,3,2.1,-2
+20230201,kennedy chandler,Memphis Grizzlies,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230201,jake laravia,Memphis Grizzlies,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230201,kenneth lofton jr.,Memphis Grizzlies,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230201,david roddy,Memphis Grizzlies,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230301,josh okogie,Phoenix Suns,33:24,0,4,.000,0,2,.000,4,4,1.000,0,3,3,1,2,1,2,1,4,3.1,+11
+20230301,deandre ayton,Phoenix Suns,33:20,7,10,.700,0,0,0,2,2,1.000,1,15,16,4,0,1,1,5,16,17.5,+9
+20230301,devin booker,Phoenix Suns,33:10,15,26,.577,3,7,.429,4,6,.667,2,4,6,7,0,2,1,1,37,31.5,+9
+20230301,chris paul,Phoenix Suns,32:51,1,8,.125,0,4,.000,0,0,0,0,2,2,11,2,0,3,2,2,3.3,+9
+20230301,kevin durant,Phoenix Suns,26:50,10,15,.667,2,4,.500,1,1,1.000,0,6,6,2,0,2,2,0,23,19.1,+13
+20230301,cameron payne,Phoenix Suns,15:09,2,6,.333,1,3,.333,0,0,0,0,4,4,2,0,0,1,2,5,2.4,+5
+20230301,torrey craig,Phoenix Suns,14:41,3,4,.750,2,2,1.000,0,0,0,1,1,2,0,2,0,1,1,8,8.0,-8
+20230301,jock landale,Phoenix Suns,14:40,2,7,.286,1,1,1.000,1,2,.500,0,3,3,2,0,2,0,3,6,4.0,+5
+20230301,damion lee,Phoenix Suns,14:36,1,2,.500,0,0,0,0,0,0,0,3,3,0,0,0,0,3,2,0.7,+3
+20230301,t.j. warren,Phoenix Suns,12:55,1,5,.200,0,1,.000,0,0,0,1,2,3,0,1,1,1,1,2,0.5,+15
+20230301,ish wainright,Phoenix Suns,8:24,0,2,.000,0,1,.000,0,0,0,0,0,0,1,1,0,0,3,0,-0.9,-1
+20230301,darius bazley,Phoenix Suns,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230301,bismack biyombo,Phoenix Suns,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230301,saben lee,Phoenix Suns,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230301,terry rozier,Charlotte Hornets,38:11,7,18,.389,3,9,.333,3,7,.429,0,6,6,5,0,0,6,1,20,7.5,-8
+20230301,kelly oubre jr.,Charlotte Hornets,38:06,9,24,.375,3,10,.300,5,5,1.000,3,6,9,1,0,1,1,4,26,15.5,-9
+20230301,gordon hayward,Charlotte Hornets,33:08,5,14,.357,3,8,.375,2,4,.500,0,2,2,4,1,0,1,1,15,9.4,-9
+20230301,jt thor,Charlotte Hornets,28:32,1,8,.125,0,2,.000,0,0,0,2,6,8,1,0,1,1,1,2,0.0,-10
+20230301,mark williams,Charlotte Hornets,28:06,4,10,.400,0,0,0,3,4,.750,5,5,10,2,1,1,1,4,11,10.7,-2
+20230301,dennis smith jr.,Charlotte Hornets,26:15,2,7,.286,0,2,.000,4,6,.667,0,5,5,6,1,2,0,2,8,10.4,-11
+20230301,nick richards,Charlotte Hornets,19:54,1,2,.500,0,0,0,0,0,0,1,1,2,0,0,2,1,2,2,1.6,-12
+20230301,bryce mcgowens,Charlotte Hornets,14:52,1,2,.500,0,1,.000,1,2,.500,0,2,2,0,0,0,1,0,3,1.2,-5
+20230301,kai jones,Charlotte Hornets,12:56,2,3,.667,0,1,.000,0,0,0,1,3,4,1,0,0,1,2,4,3.2,-4
+20230301,svi mykhailiuk,Charlotte Hornets,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230401,luka doncic,Dallas Mavericks,44:31,17,25,.680,2,6,.333,6,7,.857,0,10,10,8,2,0,3,4,42,36.9,-6
+20230401,kyrie irving,Dallas Mavericks,42:30,10,17,.588,1,4,.250,2,2,1.000,0,3,3,8,0,0,1,3,23,19.4,+4
+20230401,tim hardaway jr.,Dallas Mavericks,40:31,11,15,.733,6,10,.600,3,4,.750,0,6,6,7,0,0,1,2,31,29.4,+10
+20230401,reggie bullock,Dallas Mavericks,23:17,1,5,.200,0,4,.000,0,0,0,0,2,2,3,0,0,0,1,2,1.2,-11
+20230401,dwight powell,Dallas Mavericks,17:13,1,1,1.000,0,0,0,0,0,0,1,2,3,1,0,1,1,4,2,1.8,-2
+20230401,maxi kleber,Dallas Mavericks,27:00,3,4,.750,2,3,.667,0,0,0,0,5,5,3,1,0,3,3,8,6.8,+2
+20230401,josh green,Dallas Mavericks,21:53,0,2,.000,0,1,.000,0,0,0,0,1,1,0,0,0,1,3,0,-3.3,-4
+20230401,christian wood,Dallas Mavericks,12:31,3,5,.600,2,3,.667,0,0,0,0,1,1,2,0,1,1,1,8,6.7,-16
+20230401,jaden hardy,Dallas Mavericks,6:21,1,2,.500,1,2,.500,0,0,0,0,0,0,0,0,0,3,2,3,-1.8,-12
+20230401,justin holiday,Dallas Mavericks,4:13,0,1,.000,0,1,.000,3,3,1.000,0,0,0,0,0,0,0,0,3,2.3,0
+20230401,davis bertans,Dallas Mavericks,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230401,a.j. lawson,Dallas Mavericks,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230401,javale mcgee,Dallas Mavericks,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230401,markieff morris,Dallas Mavericks,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230401,theo pinson,Dallas Mavericks,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230401,jimmy butler,Miami Heat,37:00,12,16,.750,1,3,.333,10,11,.909,0,3,3,12,1,0,0,2,35,37.7,+6
+20230401,tyler herro,Miami Heat,36:21,5,16,.313,2,8,.250,3,3,1.000,1,5,6,3,1,0,2,1,15,8.7,-1
+20230401,max strus,Miami Heat,30:09,6,11,.545,6,9,.667,0,0,0,1,3,4,1,0,0,2,3,18,11.8,-7
+20230401,cody zeller,Miami Heat,28:37,9,13,.692,0,1,.000,2,3,.667,3,5,8,0,1,0,0,2,20,17.9,-1
+20230401,gabe vincent,Miami Heat,26:03,3,8,.375,2,5,.400,1,1,1.000,2,2,4,2,0,0,1,1,9,6.6,+6
+20230401,caleb martin,Miami Heat,33:16,4,4,1.000,0,0,0,0,0,0,0,1,1,1,1,0,1,4,8,6.2,+1
+20230401,kyle lowry,Miami Heat,26:56,1,8,.125,0,5,.000,4,5,.800,2,2,4,7,1,0,0,0,6,8.3,+14
+20230401,kevin love,Miami Heat,19:23,5,9,.556,2,5,.400,6,6,1.000,1,4,5,1,1,0,2,2,18,14.5,+8
+20230401,duncan robinson,Miami Heat,2:15,0,1,.000,0,1,.000,0,0,0,0,1,1,0,0,0,0,1,0,-0.8,+9
+20230401,udonis haslem,Miami Heat,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230401,haywood highsmith,Miami Heat,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230401,victor oladipo,Miami Heat,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230401,omer yurtseven,Miami Heat,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230501,tobias harris,Philadelphia 76ers,41:35,8,16,.500,2,5,.400,0,0,0,0,5,5,3,1,1,0,1,18,14.9,0
+20230501,james harden,Philadelphia 76ers,39:21,17,30,.567,7,14,.500,4,4,1.000,0,1,1,6,2,0,3,4,45,32.7,+8
+20230501,paul reed,Philadelphia 76ers,37:22,3,4,.750,0,0,0,4,4,1.000,4,9,13,2,1,1,0,4,10,15.4,+8
+20230501,p.j. tucker,Philadelphia 76ers,36:37,0,0,0,0,0,0,0,0,0,2,3,5,1,2,0,1,4,0,2.4,+6
+20230501,tyrese maxey,Philadelphia 76ers,35:49,10,24,.417,2,9,.222,4,4,1.000,0,1,1,2,4,0,0,5,26,16.9,+12
+20230501,de'anthony melton,Philadelphia 76ers,24:36,6,10,.600,5,6,.833,0,0,0,1,0,1,2,0,2,1,2,17,14.1,-8
+20230501,georges niang,Philadelphia 76ers,13:27,1,3,.333,1,3,.333,0,0,0,0,1,1,1,0,0,1,0,3,1.3,+2
+20230501,jalen mcdaniels,Philadelphia 76ers,11:13,0,2,.000,0,1,.000,0,0,0,1,0,1,0,0,0,0,0,0,-0.7,-8
+20230501,dewayne dedmon,Philadelphia 76ers,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230501,montrezl harrell,Philadelphia 76ers,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230501,danuel house jr.,Philadelphia 76ers,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230501,furkan korkmaz,Philadelphia 76ers,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230501,shake milton,Philadelphia 76ers,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230501,jaden springer,Philadelphia 76ers,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230501,jayson tatum,Boston Celtics,43:45,14,25,.560,4,5,.800,7,8,.875,2,9,11,5,1,1,1,2,39,34.2,-6
+20230501,jaylen brown,Boston Celtics,41:38,8,10,.800,3,4,.750,4,4,1.000,1,5,6,4,1,0,4,1,23,20.8,-2
+20230501,marcus smart,Boston Celtics,35:15,4,7,.571,0,2,.000,4,4,1.000,1,2,3,7,0,0,6,3,12,7.7,-7
+20230501,al horford,Boston Celtics,30:03,5,8,.625,1,4,.250,0,0,0,3,3,6,3,0,3,2,0,11,12.6,-17
+20230501,derrick white,Boston Celtics,27:08,1,5,.200,0,4,.000,2,2,1.000,0,2,2,3,1,0,2,2,4,1.8,-15
+20230501,malcolm brogdon,Boston Celtics,33:51,9,16,.563,2,6,.333,0,0,0,1,2,3,3,0,0,1,1,20,14.4,+14
+20230501,robert williams,Boston Celtics,19:46,3,3,1.000,0,0,0,0,0,0,0,7,7,0,0,0,0,1,6,6.8,+8
+20230501,sam hauser,Boston Celtics,4:33,0,1,.000,0,1,.000,0,0,0,0,0,0,1,0,0,0,0,0,0.0,+3
+20230501,grant williams,Boston Celtics,4:01,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0,+2
+20230501,justin champagnie,Boston Celtics,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230501,blake griffin,Boston Celtics,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230501,luke kornet,Boston Celtics,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230501,mike muscala,Boston Celtics,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230501,payton pritchard,Boston Celtics,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230601,bam adebayo,Miami Heat,39:58,13,25,.520,0,1,.000,0,0,0,4,9,13,5,0,0,1,4,26,20.1,-6
+20230601,jimmy butler,Miami Heat,38:02,6,14,.429,1,2,.500,0,0,0,3,4,7,7,1,1,1,1,13,14.1,-17
+20230601,gabe vincent,Miami Heat,37:43,7,14,.500,5,10,.500,0,0,0,1,1,2,5,0,1,1,1,19,15.8,0
+20230601,caleb martin,Miami Heat,24:34,1,7,.143,1,2,.500,0,0,0,1,3,4,0,1,1,0,3,3,0.6,-10
+20230601,max strus,Miami Heat,21:01,0,10,.000,0,9,.000,0,0,0,0,5,5,3,0,0,0,0,0,-3.4,-12
+20230601,kyle lowry,Miami Heat,25:35,4,8,.500,3,6,.500,0,0,0,0,5,5,5,1,0,2,1,11,10.6,+2
+20230601,haywood highsmith,Miami Heat,23:24,7,10,.700,2,4,.500,2,2,1.000,1,1,2,0,2,1,1,2,18,15.7,-3
+20230601,duncan robinson,Miami Heat,21:09,1,6,.167,1,5,.200,0,0,0,0,1,1,1,0,0,1,2,3,-1.6,-4
+20230601,cody zeller,Miami Heat,7:30,0,1,.000,0,0,0,0,0,0,1,2,3,0,0,0,1,1,0,-0.8,-5
+20230601,nikola jovic,Miami Heat,0:32,0,1,.000,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,-0.4,0
+20230601,omer yurtseven,Miami Heat,0:32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0,0
+20230601,udonis haslem,Miami Heat,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230601,kevin love,Miami Heat,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230601,jamal murray,Denver Nuggets,44:04,11,22,.500,2,7,.286,2,2,1.000,1,5,6,10,1,0,3,2,26,21.4,+9
+20230601,michael porter jr.,Denver Nuggets,43:04,5,16,.313,2,11,.182,2,2,1.000,2,11,13,1,0,2,0,0,14,11.6,+20
+20230601,nikola jokic,Denver Nuggets,40:27,8,12,.667,1,2,.500,10,12,.833,0,10,10,14,1,1,2,1,27,33.1,+14
+20230601,kentavious caldwell-pope,Denver Nuggets,36:27,3,8,.375,1,3,.333,0,2,.000,1,2,3,0,1,0,1,2,7,2.3,+5
+20230601,aaron gordon,Denver Nuggets,36:05,7,10,.700,0,1,.000,2,2,1.000,2,4,6,1,0,1,0,0,16,15.8,+15
+20230601,bruce brown,Denver Nuggets,20:45,4,7,.571,2,3,.667,0,0,0,0,5,5,2,1,0,3,1,10,7.2,+1
+20230601,jeff green,Denver Nuggets,10:57,2,3,.667,0,0,0,0,0,0,0,1,1,0,0,0,0,0,4,3.0,-8
+20230601,christian braun,Denver Nuggets,8:11,0,1,.000,0,0,0,0,0,0,0,1,1,1,0,0,1,2,0,-1.5,-1
+20230601,thomas bryant,Denver Nuggets,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230601,vlatko cancar,Denver Nuggets,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230601,reggie jackson,Denver Nuggets,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230601,deandre jordan,Denver Nuggets,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230601,zeke nnaji,Denver Nuggets,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230601,ish smith,Denver Nuggets,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
+20230601,peyton watson,Denver Nuggets,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP,DNP
