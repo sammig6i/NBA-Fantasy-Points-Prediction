@@ -16,6 +16,7 @@ seaborn = "^0.13.2"
 matplotlib = "^3.9.1"
 bs4 = "^0.0.2"
 requests = "^2.32.3"
+selenium = "^4.23.1"
 
 
 [build-system]

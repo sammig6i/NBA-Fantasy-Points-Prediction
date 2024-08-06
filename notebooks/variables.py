@@ -1,19 +1,19 @@
 team_dictionary = {
-    'Atlanta Hawks': 'Atl', 'Boston Celtics': 'Bos', 
-    'Brooklyn Nets': 'Bkn', 'Charlotte Hornets': 'Cha', 
-    'Chicago Bulls': 'Chi', 'Cleveland Cavaliers': 'Cle', 
-    'Dallas Mavericks': 'Dal', 'Denver Nuggets': 'Den', 
-    'Detroit Pistons': 'Det','Golden State Warriors': 'GSW', 
-    'Houston Rockets': 'Hou', 'Indiana Pacers': 'Ind',
+    'Atlanta Hawks': 'ATL', 'Boston Celtics': 'BOS', 
+    'Brooklyn Nets': 'BRK', 'Charlotte Hornets': 'CHO', 
+    'Chicago Bulls': 'CHI', 'Cleveland Cavaliers': 'CLE', 
+    'Dallas Mavericks': 'DAL', 'Denver Nuggets': 'DEN', 
+    'Detroit Pistons': 'DET','Golden State Warriors': 'GSW', 
+    'Houston Rockets': 'HOU', 'Indiana Pacers': 'IND',
     'Los Angeles Lakers': 'LAL', 'Los Angeles Clippers': 'LAC', 
-    'Memphis Grizzlies': 'Mem', 'Miami Heat': 'Mia', 
-    'Milwaukee Bucks': 'Mil', 'Minnesota Timberwolves': 'Min', 
-    'New Orleans Pelicans': 'Nor', 'New York Knicks': 'NYK', 
-    'Oklahoma City Thunder': 'OKC', 'Orlando Magic': 'Orl', 
-    'Philadelphia 76ers': 'Phi', 'Phoenix Suns': 'Pho', 
-    'Portland Trail Blazers': 'Por', 'Sacramento Kings': 'Sac', 
-    'San Antonio Spurs': 'SAS', 'Toronto Raptors': 'Tor', 
-    'Utah Jazz': 'Uta', 'Washington Wizards': 'Was'
+    'Memphis Grizzlies': 'MEM', 'Miami Heat': 'MIA', 
+    'Milwaukee Bucks': 'MIL', 'Minnesota Timberwolves': 'MIN', 
+    'New Orleans Pelicans': 'NOP', 'New York Knicks': 'NYK', 
+    'Oklahoma City Thunder': 'OKC', 'Orlando Magic': 'ORL', 
+    'Philadelphia 76ers': 'PHI', 'Phoenix Suns': 'PHO', 
+    'Portland Trail Blazers': 'POR', 'Sacramento Kings': 'SAC', 
+    'San Antonio Spurs': 'SAS', 'Toronto Raptors': 'TOR', 
+    'Utah Jazz': 'UTA', 'Washington Wizards': 'WAS'
 }
 
 month_dictionary = {'Jan': '01', 'Feb': '02',  'Mar': '03', 
