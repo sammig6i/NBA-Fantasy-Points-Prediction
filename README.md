@@ -30,10 +30,10 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="assets/image.png" alt="Logo" width="200" height="200">
+    <img src="assets/image.png" alt="Logo" width="300" height="300">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">SwishPredict</h3>
 
   <p align="center">
     project_description
