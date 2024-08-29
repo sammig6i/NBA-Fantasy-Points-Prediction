@@ -26,12 +26,11 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="https://www.google.com/imgres?q=nba%20fantasy&imgurl=https%3A%2F%2Fimages.contentstack.io%2Fv3%2Fassets%2Fblt02fb52e5e7a6fbb9%2Fblt18c450038da47f3a%2F5f738936968bb93b9e8521c5%2FDFS_Basketball.png&imgrefurl=https%3A%2F%2Fwww.draftkings.com%2Ffantasy-basketball&docid=VYlPY1c_lija_M&tbnid=RxLEg4enWRpcLM&vet=12ahUKEwiEkpbPkZuIAxXRDTQIHTfUFnQQM3oECGUQAA..i&w=1477&h=892&hcb=2&ved=2ahUKEwiEkpbPkZuIAxXRDTQIHTfUFnQQM3oECGUQAA" alt="Logo" width="80" height="80">
+    <img src="assets/image.png" alt="Logo" width="150" height="150">
   </a>
 
 <h3 align="center">project_title</h3>
@@ -116,30 +115,30 @@ To get a local copy up and running follow these simple example steps.
 
 This is an example of how to list things you need to use the software and how to install them.
 * npm
-  ```sh
-  npm install npm@latest -g
-  ```
+```sh
+npm install npm@latest -g
+```
 
 ### Installation
 
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
+  ```sh
+  git clone https://github.com/github_username/repo_name.git
+  ```
 3. Install NPM packages
-   ```sh
-   npm install
-   ```
+  ```sh
+  npm install
+  ```
 4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+  ```js
+  const API_KEY = 'ENTER YOUR API';
+  ```
 5. Change git remote url to avoid accidental pushes to base project
-   ```sh
-   git remote set-url origin github_username/repo_name
-   git remote -v # confirm the changes
-   ```
+  ```sh
+  git remote set-url origin github_username/repo_name
+  git remote -v # confirm the changes
+  ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
