@@ -29,7 +29,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="git@github.com:sammig6i/SwishPredict.git">
+  <a href="https://github.com/sammig6i/SwishPredict">
     <img src="assets/image.png" alt="Logo" width="300" height="300">
   </a>
 
