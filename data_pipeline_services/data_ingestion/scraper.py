@@ -9,6 +9,7 @@ BASE_URL = 'https://www.basketball-reference.com'
 month_dictionary = {'Jan': '01', 'Feb': '02',  'Mar': '03', 
 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
 
+
 def get_month_links(season):
   """
   Fetches the month links from the Basketball Reference website for a given NBA season.
@@ -42,10 +43,7 @@ def get_month_links(season):
     response = requests.get(start_url)
     response.raise_for_status()
   except requests.exceptions.HTTPError as err:                  # TODO Add helper function for handling errors
-    if response.status_code == 429:
-      print("Rate limit exceeded. Please try again later.")
-    else:
-      print(f"HTTP error occurred: {err}")
+    print(f"HTTP error occurred: {err}")
     return None, None
   
   soup = BeautifulSoup(response.text, 'html.parser')
@@ -61,12 +59,24 @@ def get_month_links(season):
     
   return month_link_list
 
-# TODO UPDATE
+
+
+
+
 def get_box_score_links(month_link_list): 
   """
-  
+  Fetches box score links and corresponding game dates from the given list of month page links.
+
+    Inputs:
+      month_link_list (list of tuples): List of tuples where each tuple contains:
+        - month (str): The name of the month (e.g., 'october').
+        - page (str): The full URL to the page for that month.
+
+    Returns:
+      tuple: A tuple containing:
+        - box_link_array (list of lists): A list of lists where each inner list contains the URLs to box scores for the games played in the given month.
+        - all_dates (list of lists): A list of lists where each inner list contains the corresponding dates (formatted as 'YYYYMMDD') for the box scores in the same order as `box_link_array`.
   """
-  page_to_check_dict = {'Month': [], 'Url': [], 'Index': []}
   box_link_array = []
   all_dates = []
 
@@ -83,39 +93,29 @@ def get_box_score_links(month_link_list):
         if i.text.strip() == 'Box Score':
           page_link_list.append(f"{BASE_URL}{i['href']}")
         if ',' in i.text.strip():
-          date = i.text.strip()
-          date = date.split(', ')
-          year = date[2]
-          date = date[1].split(' ')
-          day = f'0{date[1]}' if len(date[1]) == 1 else date[1]
-
-          mon = month_dictionary[date[0]]
-          date = f'{year}{mon}{day}'
-          page_date_list.append(date)
-      if len(page_link_list) == 0 or len(box_scores)/len(page_link_list) != 4:
-        page_to_check_dict['Url'].append(page)
-        page_to_check_dict['Month'].append(month)
-        page_to_check_dict['Index'].append(len(page_link_list))
-      else:
-        page_to_check_dict['Url'].append(page)
-        page_to_check_dict['Month'].append(month)
-        page_to_check_dict['Index'].append(None)
+          date_parts = i.text.strip().split(', ')
+          year = date_parts[2]
+          day = date_parts[1].split(' ')[1].zfill(2)
+          month_code = month_dictionary[date_parts[1].split(' ')[0]]
+          formatted_date = f'{year}{month_code}{day}'
+          page_date_list.append(formatted_date)
       box_link_array.append(page_link_list)
       all_dates.append(page_date_list)
       time.sleep(10)
     except requests.exceptions.HTTPError as err:              # TODO Add helper function for handling errors
-      if response.status_code == 429:
-        print("Rate limit exceeded. Please try again later.")
-      else:
-        print(f"HTTP error occurred: {err}")
+      print(f"HTTP error occurred: {err}")
       return None, None
   return box_link_array, all_dates
 
 
+
+
 # TODO UPDATE
-# iterate through the box links and dates and extract game data for each player
 # from https://medium.com/@HeeebsInc/using-machine-learning-to-predict-daily-fantasy-basketball-scores-part-i-811de3c54a98
 def extract_player_data(box_links, all_dates, season):
+  """
+  
+  """
   df_columns = ['Date', 'Name', 'Team', 'MP', 'FG', 'FGA', 'FG%', '3P', '3PA',
                '3P%','FT', 'FTA', 'FT%', 'ORB','DRB', 'TRB', 'AST', 'STL', 'BLK', 
                'TOV', 'PF', 'PTS', 'GmSc', '+-' ]
@@ -200,11 +200,15 @@ def normalize_name(name):
 
 
 if __name__ == "__main__":
-  month_links = get_month_links('2023-24')
   season = '2023-24'
+  month_links = get_month_links(season)
   if month_links:
-    print(f"Found {len(month_links)} month links for the {season} season:")
-    for month, link in month_links:
-      print(f"{month}: {link}")
+    print(f"Testing the first 2 month links for the {season} season.")
+    test_month_links = month_links[:1]
+    box_score_links, all_dates = get_box_score_links(test_month_links)
+
+    print(f"Found {len(box_score_links)} sets of box score links.")
+    print(f"{box_score_links}\n {all_dates}")
   else:
     print("No month links found.")
+  
