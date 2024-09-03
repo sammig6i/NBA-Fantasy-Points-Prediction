@@ -1,0 +1,46 @@
+---
+model_info:
+  name: XGBoost_FantasyPoints_Predictor
+  version: '1.0'
+  save_date: '2024-09-01'
+
+performance_metrics:
+  test_mae: 6.163228800313608
+  test_mse: 66.63370955961138
+  test_rmse: 8.162947357395574
+  test_r2: 0.7177536081562295
+
+file_path: '../models/best_xgboost_model.joblib'
+
+
+features:
+  - MP
+  - FG_2game_avg
+  - FG%_2game_avg	
+  - 3P_2game_avg
+  - 3P%_2game_avg
+  - FT_2game_avg
+  - FT%_2game_avg
+  - ORB_2game_avg
+  - DRB_2game_avg
+  - AST_2game_avg
+  - STL_2game_avg
+  - BLK_2game_avg
+  - TOV_2game_avg
+  - PF_2game_avg
+  - PTS_per_FGA_2game_avg
+  - Home
+
+target_variable: fpts_fanduel
+
+data_info:
+  training_data_path: '../data/processed/training_data.csv'
+  test_data_path: '../data/processed/test_data.csv'
+  data_version: '1.0'
+
+notes: >
+  This model predicts fantasy basketball points based on player statistics.
+  It was trained on data from the 2022-23 & 2023-24 NBA season.
+  
+  Additional information about features, hyperparameters, and data sources
+  will be added in future iterations.
