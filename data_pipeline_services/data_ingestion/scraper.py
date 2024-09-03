@@ -3,22 +3,33 @@ from bs4 import BeautifulSoup
 
 BASE_URL = 'https://www.basketball-reference.com'
 
-def get_month_links(start_url):
+def get_month_links(season):
   """
-  Fetches the month links from the Basketball Reference website.
+  Fetches the month links from the Basketball Reference website for a given NBA season.
 
   Inputs:
-    start_url (str): The URL of the page containing links to different months of the NBA season.
+    season (str): The NBA season in the format 'YYYY-YY' (e.g., '2019-20').
 
   Returns:
     tuple: A tuple containing:
       - month_link_list (list of tuples): A list of tuples where each tuple contains:
         - link_text (str): The name of the month (e.g., 'october', 'november').
         - url (str): The full URL to the page for that month.
-      - season (str): The NBA season year extracted from the page (e.g., '2023-24').
           
       If an HTTP error occurs, the function returns (None, None).
   """
+  try:
+    start_year, end_year = season.split('-')
+    start_year = int(start_year)
+    if len(end_year) != 2 or not end_year.isdigit():
+      raise ValueError
+  except(ValueError, AttributeError):
+    print(f"Invalid season format: {season}. Expected format is 'YYYY-YY'.")
+    return None, None
+
+  end_year_full = start_year + 1 if end_year == '00' else int(str(start_year)[:2] + end_year)
+  
+  start_url = f"{BASE_URL}/leagues/NBA_{end_year_full}_games.html"
 
   month_link_list = []
   try:
@@ -26,13 +37,12 @@ def get_month_links(start_url):
     response.raise_for_status()
   except requests.exceptions.HTTPError as err:
     if response.status_code == 429:
-      print("Rate limit exceeded. Please try again later.") #TODO Add helper function for handling error
+      print("Rate limit exceeded. Please try again later.") #TODO Add helper function for handling errors
     else:
       print(f"HTTP error occurred: {err}")
     return None, None
   
   soup = BeautifulSoup(response.text, 'html.parser')
-  season = soup.find('h1').text.strip().split(' ')[0]
   body = soup.find('body')
 
   div_elements = body.find_all('div', class_='filter')
@@ -43,10 +53,10 @@ def get_month_links(start_url):
       if any(month in link_text for month in a_tag.text.strip().lower().split()):
         month_link_list.append((link_text, f"{BASE_URL}{a_tag['href']}"))
     
-  return month_link_list, season
+  return month_link_list
 
 
-def get_box_score_links(month_link_list):
+def get_box_score_links(month_link_list): # TODO UPDATE
   base_url = 'https://www.basketball-reference.com'
   page_to_check_dict = {'Month': [], 'Url': [], 'Index': []}
   box_link_array = []
@@ -96,11 +106,10 @@ def get_box_score_links(month_link_list):
 
 
 if __name__ == "__main__":
-  start_url = f"{BASE_URL}/leagues/NBA_2012_games.html"
-  month_links, season = get_month_links(start_url)
+  month_links = get_month_links('2023-24')
+  season = '2023-24'
   if month_links:
     print(f"Found {len(month_links)} month links for the {season} season:")
-    print (f"{month_links}")
     for month, link in month_links:
       print(f"{month}: {link}")
   else:
