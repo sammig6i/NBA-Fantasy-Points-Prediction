@@ -197,6 +197,8 @@ def normalize_name(name):
   without_diacritics = ''.join(c for c in normalized if not unicodedata.combining(c))
   return without_diacritics.lower()
 
+
+
 if __name__ == "__main__":
   month_links = get_month_links('2023-24')
   season = '2023-24'
