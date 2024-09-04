@@ -4,6 +4,7 @@ import time
 import pandas as pd
 import unicodedata
 import random
+import os
 
 BASE_URL = 'https://www.basketball-reference.com'
 month_dictionary = {'Jan': '01', 'Feb': '02',  'Mar': '03', 
@@ -23,7 +24,7 @@ def get_month_links(season):
         - link_text (str): The name of the month (e.g., 'october', 'november').
         - url (str): The full URL to the page for that month.
           
-    If an HTTP error occurs, the function returns (None, None).
+  If an HTTP error occurs, the function returns (None, None).
   """
   try:
     start_year, end_year = season.split('-')
@@ -64,7 +65,7 @@ def get_month_links(season):
 
 
 def get_box_score_links(month_link_list): 
-  """
+  """ 
   Fetches box score links and corresponding game dates from the given list of month page links.
 
   Inputs:
@@ -76,11 +77,13 @@ def get_box_score_links(month_link_list):
     tuple: A tuple containing:
       - box_link_array (list of lists): A list of lists where each inner list contains the URLs to box scores for the games played in the given month.
       - all_dates (list of lists): A list of lists where each inner list contains the corresponding dates (formatted as 'YYYYMMDD') for the box scores in the same order as `box_link_array`.
+
+  If an HTTP error occurs, the function returns (None, None).
   """
   box_link_array = []
   all_dates = []
 
-  for month, page in month_link_list:
+  for _, page in month_link_list:
     page_link_list = []
     page_date_list = []
     try:
@@ -110,11 +113,18 @@ def get_box_score_links(month_link_list):
 
 
 
-# TODO UPDATE
 # from https://medium.com/@HeeebsInc/using-machine-learning-to-predict-daily-fantasy-basketball-scores-part-i-811de3c54a98
 def extract_player_data(box_links, all_dates):
   """
-  
+  Extract player statistics from each box score link and save the data to a DataFrame.
+
+    Inputs:
+      box_links (list of lists): A list containing lists of URLs to box score pages.
+      all_dates (list of lists): A list containing lists of dates corresponding to the box scores.
+      season (str): The NBA season in the format 'YYYY-YY' (e.g., '2023-24').
+
+    Returns:
+      stat_df (pd.DataFrame): A DataFrame containing the extracted player statistics.
   """
   df_columns = [
                 'Date', 'Name', 'Team', 'MP', 'FG', 'FGA', 'FG%', '3P', '3PA',
@@ -122,15 +132,13 @@ def extract_player_data(box_links, all_dates):
                 'TOV', 'PF', 'PTS', 'GmSc', '+-'
                ]
   
-  stat_df = pd.DataFrame(columns = df_columns)
-  error_df = pd.DataFrame(columns = ['URL', 'Error'])
+  stat_df = pd.DataFrame(columns=df_columns)
 
-  for i, (l, d) in enumerate(zip(box_links, all_dates)):
+  for i, (links, dates) in enumerate(zip(box_links, all_dates)):
     print(f'Processing batch {i+1}/{len(box_links)}')
 
-    for link, date in zip(l, d):
-      print(f'{link}\n{date}')
-      print(f'Currently Scraping {link}')
+    for link, date in zip(links, dates):
+      print(f'Scraping box score: {link} for game date {date}')
       
       try:
         response = requests.get(link)
@@ -172,12 +180,7 @@ def extract_player_data(box_links, all_dates):
       
       time.sleep(random.uniform(3, 7))
 
-  # TODO create function to save the dataframes to CSVs
-  stat_df.to_csv(f'Season({season}).csv', lineterminator='\n', index=False)
-  error_df.to_csv(f'Errors_Season({season}).csv', lineterminator='\n', index=False)
-  
-  message = f'Saved game stats for the {season} season to a csv'
-  print(message)
+  return stat_df
 
       
 def normalize_name(name):
@@ -187,17 +190,34 @@ def normalize_name(name):
   return without_diacritics.lower()
 
 
+def save_dataframes_to_csv(df, season, output_dir="output"):
+  if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
+
+  file_name = f"{season}_Season.csv"
+  file_path = os.path.join(output_dir, file_name)
+
+  df.to_csv(file_path, lineterminator='\n', index=False)
+  print(f'Saved game stats for the {season} season to {file_name}')
+
+
 
 if __name__ == "__main__":
   season = '2023-24'
   month_links = get_month_links(season)
   if month_links:
-    print(f"Testing the first 2 month links for the {season} season.")
+    print(f"Testing the first month links for the {season} season.")
     test_month_links = month_links[:1]
     box_score_links, all_dates = get_box_score_links(test_month_links)
 
-    print(f"Found {len(box_score_links)} sets of box score links.")
-    print(f"{box_score_links}\n {all_dates}")
+    if box_score_links and all_dates:
+      print(f"Found {len(box_score_links)} sets of box score links.")
+      limited_box_score_links = box_score_links[0][:5]
+      limited_dates = all_dates[0][:5]
+      stat_df = extract_player_data([limited_box_score_links], [limited_dates])
+      save_dataframes_to_csv(stat_df, season, output_dir="data")
+    else:
+      print("No box score links found.")
+  
   else:
     print("No month links found.")
-  
