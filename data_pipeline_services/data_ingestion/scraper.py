@@ -2,9 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import pandas as pd
-import unicodedata
 import random
-import os
+from utils import normalize_name, save_dataframes_to_csv, handle_http_error, handle_general_error
 
 BASE_URL = 'https://www.basketball-reference.com'
 month_dictionary = {'Jan': '01', 'Feb': '02',  'Mar': '03', 
@@ -24,7 +23,6 @@ def get_month_links(season):
         - link_text (str): The name of the month (e.g., 'october', 'november').
         - url (str): The full URL to the page for that month.
           
-  If an HTTP error occurs, the function returns (None, None).
   """
   try:
     start_year, end_year = season.split('-')
@@ -43,9 +41,10 @@ def get_month_links(season):
   try:
     response = requests.get(start_url)
     response.raise_for_status()
-  except requests.exceptions.HTTPError as err:                  # TODO Add helper function for handling errors
-    print(f"HTTP error occurred: {err}")
-    return None, None
+  except requests.exceptions.HTTPError:                  # TODO Add helper function for handling errors
+    handle_http_error(response)
+  except Exception as e:
+    handle_general_error(e, start_url)
   
   soup = BeautifulSoup(response.text, 'html.parser')
   body = soup.find('body')
@@ -63,8 +62,7 @@ def get_month_links(season):
 
 
 
-
-def get_box_score_links(month_link_list): 
+def get_box_score_links(month_link_list):
   """ 
   Fetches box score links and corresponding game dates from the given list of month page links.
 
@@ -105,9 +103,11 @@ def get_box_score_links(month_link_list):
       box_link_array.append(page_link_list)
       all_dates.append(page_date_list)
       time.sleep(10)
-    except requests.exceptions.HTTPError as err:              # TODO Add helper function for handling errors
-      print(f"HTTP error occurred: {err}")
-      return None, None
+    except requests.exceptions.HTTPError:              # TODO Add helper function for handling errors
+      handle_http_error(response)
+    except Exception as e:
+      handle_general_error(e, page)
+
   return box_link_array, all_dates
 
 
@@ -172,34 +172,16 @@ def extract_player_data(box_links, all_dates):
             else:
               print(f'Skipping incomplete data for {player_name}')
 
-      except requests.exceptions.HTTPError as http_err:
-        print(f"HTTP error occurred for {link}: {http_err}")
-
+      except requests.exceptions.HTTPError:
+        handle_http_error(response)
       except Exception as e:                                  # TODO Add helper function for handling errors
-        print(f"General error occurred for {link}: {str(e)}")
+        handle_general_error(e, link)
       
       time.sleep(random.uniform(3, 7))
 
   return stat_df
 
-      
-def normalize_name(name):
-  """Normalize player names by removing diacritics and converting to lowercase."""
-  normalized = unicodedata.normalize('NFKD', name)
-  without_diacritics = ''.join(c for c in normalized if not unicodedata.combining(c))
-  return without_diacritics.lower()
-
-
-def save_dataframes_to_csv(df, season, output_dir="output"):
-  if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
-
-  file_name = f"{season}_Season.csv"
-  file_path = os.path.join(output_dir, file_name)
-
-  df.to_csv(file_path, lineterminator='\n', index=False)
-  print(f'Saved game stats for the {season} season to {file_name}')
-
+    
 
 
 if __name__ == "__main__":
