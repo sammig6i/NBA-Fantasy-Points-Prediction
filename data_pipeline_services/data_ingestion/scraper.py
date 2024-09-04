@@ -37,7 +37,7 @@ def get_month_links(season):
   try:
     response = requests.get(start_url)
     response.raise_for_status()
-  except requests.exceptions.HTTPError:                  # TODO Add helper function for handling errors
+  except requests.exceptions.HTTPError:
     handle_http_error(response)
   except Exception as e:
     handle_general_error(e, start_url)
@@ -99,7 +99,7 @@ def get_box_score_links(month_link_list):
       box_link_array.append(page_link_list)
       all_dates.append(page_date_list)
       time.sleep(10)
-    except requests.exceptions.HTTPError:              # TODO Add helper function for handling errors
+    except requests.exceptions.HTTPError:
       handle_http_error(response)
     except Exception as e:
       handle_general_error(e, page)
@@ -170,18 +170,19 @@ def extract_player_data(box_links, all_dates):
 
       except requests.exceptions.HTTPError:
         handle_http_error(response)
-      except Exception as e:                                  # TODO Add helper function for handling errors
+      except Exception as e:
         handle_general_error(e, link)
       
       time.sleep(random.uniform(3, 7))
 
   return stat_df
 
-    
 
+
+  
 
 if __name__ == "__main__":
-  season = '2023-24'
+  season = '2024-25'
   month_links = get_month_links(season)
   if month_links:
     print(f"Testing the first month links for the {season} season.")
@@ -196,6 +197,5 @@ if __name__ == "__main__":
       save_dataframes_to_csv(stat_df, season, output_dir="data")
     else:
       print("No box score links found.")
-  
   else:
     print("No month links found.")
