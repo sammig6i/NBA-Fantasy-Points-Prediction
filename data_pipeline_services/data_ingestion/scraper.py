@@ -4,10 +4,7 @@ import time
 import pandas as pd
 import random
 from utils import normalize_name, save_dataframes_to_csv, handle_http_error, handle_general_error
-
-BASE_URL = 'https://www.basketball-reference.com'
-month_dictionary = {'Jan': '01', 'Feb': '02',  'Mar': '03', 
-'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
+from config import BASE_URL, MONTH_DICT
 
 
 def get_month_links(season):
@@ -22,7 +19,6 @@ def get_month_links(season):
       - month_link_list (list of tuples): A list of tuples where each tuple contains:
         - link_text (str): The name of the month (e.g., 'october', 'november').
         - url (str): The full URL to the page for that month.
-          
   """
   try:
     start_year, end_year = season.split('-')
@@ -97,7 +93,7 @@ def get_box_score_links(month_link_list):
           date_parts = i.text.strip().split(', ')
           year = date_parts[2]
           day = date_parts[1].split(' ')[1].zfill(2)
-          month_code = month_dictionary[date_parts[1].split(' ')[0]]
+          month_code = MONTH_DICT[date_parts[1].split(' ')[0]]
           formatted_date = f'{year}{month_code}{day}'
           page_date_list.append(formatted_date)
       box_link_array.append(page_link_list)
@@ -118,13 +114,13 @@ def extract_player_data(box_links, all_dates):
   """
   Extract player statistics from each box score link and save the data to a DataFrame.
 
-    Inputs:
-      box_links (list of lists): A list containing lists of URLs to box score pages.
-      all_dates (list of lists): A list containing lists of dates corresponding to the box scores.
-      season (str): The NBA season in the format 'YYYY-YY' (e.g., '2023-24').
+  Inputs:
+    box_links (list of lists): A list containing lists of URLs to box score pages.
+    all_dates (list of lists): A list containing lists of dates corresponding to the box scores.
+    season (str): The NBA season in the format 'YYYY-YY' (e.g., '2023-24').
 
-    Returns:
-      stat_df (pd.DataFrame): A DataFrame containing the extracted player statistics.
+  Returns:
+    stat_df (pd.DataFrame): A DataFrame containing the extracted player statistics.
   """
   df_columns = [
                 'Date', 'Name', 'Team', 'MP', 'FG', 'FGA', 'FG%', '3P', '3PA',
