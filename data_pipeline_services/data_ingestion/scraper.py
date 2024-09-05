@@ -4,9 +4,8 @@ import time
 import pandas as pd
 import random
 from utils import normalize_name, save_dataframes_to_csv, handle_http_error, handle_general_error
-from config import BASE_URL, MONTH_DICT
+from config import BASE_URL, MONTH_DICT, TEAM_ABBREVIATIONS
 
-#! Scrape Game links and add as column for each player
 
 def get_month_links(season):
   """
