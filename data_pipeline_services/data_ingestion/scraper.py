@@ -144,17 +144,18 @@ def extract_player_data(box_links, all_dates):
         response.encoding = response.apparent_encoding
         soup = BeautifulSoup(response.text, 'html.parser')
 
+        home_team_abbr = link.split('/')[-1].split('.')[0][-3:]  # https://www.basketball-reference.com/boxscores/202310240DEN.html
+        home_team = TEAM_ABBREVIATIONS.get(home_team_abbr, None)
+        print(home_team)
+
         tables = soup.find_all('table', id=lambda x: x and x.endswith('-game-basic'))
         team_names = [table.find('caption').text.split(' Basic and Advanced Stats Table')[0].strip() for table in tables]
-        home_team_abbr = link.split('/')[-1][-7:-4]  # Example: '202110190MIL.html' -> 'MIL'
-
         for table in tables:
           team_name = table.find('caption').text.split(' Basic and Advanced Stats Table')[0].strip()
           opponent_name = team_names[1] if team_names[0] == team_name else team_names[0]
           rows = table.find('tbody').find_all('tr')
 
-          team_abbreviation = TEAM_ABBREVIATIONS.get(team_name, None)
-          is_home = 1 if team_abbreviation == home_team_abbr else 0
+          is_home = 1 if team_name == home_team else 0
 
           for row in rows:
             if row.find('th').text in ['Team Totals', 'Reserves']:
