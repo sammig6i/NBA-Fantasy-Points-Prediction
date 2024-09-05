@@ -6,6 +6,7 @@ import random
 from utils import normalize_name, save_dataframes_to_csv, handle_http_error, handle_general_error
 from config import BASE_URL, MONTH_DICT
 
+#! Scrape Game links and add as column for each player
 
 def get_month_links(season):
   """
@@ -84,8 +85,10 @@ def get_box_score_links(month_link_list):
       response = requests.get(page)
       response.raise_for_status()
       soup = BeautifulSoup(response.text, 'html.parser')
+
       table = soup.find_all('tbody')
       box_scores = table[0].find_all('a', href=True)
+
       for i in box_scores:
         if i.text.strip() == 'Box Score':
           page_link_list.append(f"{BASE_URL}{i['href']}")
@@ -123,9 +126,9 @@ def extract_player_data(box_links, all_dates):
     stat_df (pd.DataFrame): A DataFrame containing the extracted player statistics.
   """
   df_columns = [
-                'Date', 'Name', 'Team', 'MP', 'FG', 'FGA', 'FG%', '3P', '3PA',
+                'Date', 'Name', 'Team', 'Opponent', 'MP', 'FG', 'FGA', 'FG%', '3P', '3PA',
                 '3P%','FT', 'FTA', 'FT%', 'ORB','DRB', 'TRB', 'AST', 'STL', 'BLK', 
-                'TOV', 'PF', 'PTS', 'GmSc', '+-'
+                'TOV', 'PF', 'PTS', 'GmSc', '+-', 'GameLink'
                ]
   
   stat_df = pd.DataFrame(columns=df_columns)
@@ -143,9 +146,11 @@ def extract_player_data(box_links, all_dates):
         soup = BeautifulSoup(response.text, 'html.parser')
 
         tables = soup.find_all('table', id=lambda x: x and x.endswith('-game-basic'))
+        team_names = [table.find('caption').text.split(' Basic and Advanced Stats Table')[0].strip() for table in tables]
 
         for table in tables:
           team_name = table.find('caption').text.split(' Basic and Advanced Stats Table')[0].strip()
+          opponent_name = team_names[1] if team_names[0] == team_name else team_names[0]
           rows = table.find('tbody').find_all('tr')
 
           for row in rows:
@@ -153,15 +158,17 @@ def extract_player_data(box_links, all_dates):
               continue
             player_name = normalize_name(row.find('th').text.strip())
 
-            stats = [date, player_name, team_name]
+            stats = [date, player_name, team_name, opponent_name]
 
             dnp = row.find('td', {'data-stat': 'reason'})
             if dnp and 'Did Not Play' in dnp.text:
-              stats += ['DNP'] * (len(df_columns) - 3)
+              stats += ['DNP'] * (len(df_columns) - 5)
             else:
               for td in row.find_all('td'):
                 stats.append(td.text.strip() or '0')
-  
+            
+            stats.append(link)
+
             if len(stats) == len(df_columns):
               new_row = pd.DataFrame([stats], columns=df_columns)
               stat_df = pd.concat([stat_df, new_row], ignore_index=True)
@@ -179,10 +186,9 @@ def extract_player_data(box_links, all_dates):
 
 
 
-  
 
 if __name__ == "__main__":
-  season = '2024-25'
+  season = '2021-22'
   month_links = get_month_links(season)
   if month_links:
     print(f"Testing the first month links for the {season} season.")
