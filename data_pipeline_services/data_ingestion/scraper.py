@@ -127,7 +127,7 @@ def extract_player_data(box_links, all_dates):
   df_columns = [
                 'Date', 'Name', 'Team', 'Opponent', 'MP', 'FG', 'FGA', 'FG%', '3P', '3PA',
                 '3P%','FT', 'FTA', 'FT%', 'ORB','DRB', 'TRB', 'AST', 'STL', 'BLK', 
-                'TOV', 'PF', 'PTS', 'GmSc', '+-', 'GameLink'
+                'TOV', 'PF', 'PTS', 'GmSc', '+-', 'GameLink', 'Home'
                ]
   
   stat_df = pd.DataFrame(columns=df_columns)
@@ -146,11 +146,15 @@ def extract_player_data(box_links, all_dates):
 
         tables = soup.find_all('table', id=lambda x: x and x.endswith('-game-basic'))
         team_names = [table.find('caption').text.split(' Basic and Advanced Stats Table')[0].strip() for table in tables]
+        home_team_abbr = link.split('/')[-1][-7:-4]  # Example: '202110190MIL.html' -> 'MIL'
 
         for table in tables:
           team_name = table.find('caption').text.split(' Basic and Advanced Stats Table')[0].strip()
           opponent_name = team_names[1] if team_names[0] == team_name else team_names[0]
           rows = table.find('tbody').find_all('tr')
+
+          team_abbreviation = TEAM_ABBREVIATIONS.get(team_name, None)
+          is_home = 1 if team_abbreviation == home_team_abbr else 0
 
           for row in rows:
             if row.find('th').text in ['Team Totals', 'Reserves']:
@@ -161,12 +165,13 @@ def extract_player_data(box_links, all_dates):
 
             dnp = row.find('td', {'data-stat': 'reason'})
             if dnp and 'Did Not Play' in dnp.text:
-              stats += ['DNP'] * (len(df_columns) - 5)
+              stats += ['DNP'] * (len(df_columns) - 6)
             else:
               for td in row.find_all('td'):
                 stats.append(td.text.strip() or '0')
             
             stats.append(link)
+            stats.append(is_home)
 
             if len(stats) == len(df_columns):
               new_row = pd.DataFrame([stats], columns=df_columns)
