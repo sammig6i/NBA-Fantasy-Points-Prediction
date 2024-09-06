@@ -191,7 +191,6 @@ def extract_player_data(box_links, all_dates):
 
 
 
-
 if __name__ == "__main__":
   season = '2021-22'
   month_links = get_month_links(season)
