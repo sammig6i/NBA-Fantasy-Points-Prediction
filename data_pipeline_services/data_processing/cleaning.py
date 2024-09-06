@@ -4,6 +4,7 @@ import psycopg2
 import logging
 from dotenv import load_dotenv
 from psycopg2.extensions import connection
+from data_ingestion.config import TEAM_ABBREVIATIONS
 
 load_dotenv()
 logging.basicConfig(level=logging.ERROR)
@@ -28,6 +29,22 @@ def load_raw_data(file_path: str) -> pd.DataFrame:
   Load raw csv file into pandas Dataframe.
   """
   df = pd.read_csv(file_path)
+  return df
+
+def convert_team_names_to_abbreviations(df: pd.DataFrame) -> pd.DataFrame:
+  """
+  Convert full team names to their abbreviations in the DataFrame.
+  """
+  TEAM_ABBREVIATIONS_REVERSED = {v: k for k, v in TEAM_ABBREVIATIONS.items()}
+
+  df['Team'] = df['Team'].map(TEAM_ABBREVIATIONS_REVERSED)
+  df['Opponent'] = df['Opponent'].map(TEAM_ABBREVIATIONS_REVERSED)
+  
+  if df['Team'].isnull().any():
+    print("Warning: Some teams could not be mapped to abbreviations.")
+  if df['Opponent'].isnull().any():
+    print("Warning: Some opponents could not be mapped to abbreviations.")
+  
   return df
 
 
@@ -133,6 +150,7 @@ def process_raw_data(file_path: str) -> None:
   raw_df = load_raw_data(file_path)
 
   cleaned_df = remove_duplicates(raw_df)
+  cleaned_df = convert_team_names_to_abbreviations(cleaned_df)
 
   player_id_map = assign_player_ids(cleaned_df, connection)
   game_id_map = assign_game_ids(cleaned_df, connection)
@@ -141,7 +159,8 @@ def process_raw_data(file_path: str) -> None:
 
   connection.close()
 
+#! Validate columns to be correct data types 'MP' -> from time to float '+-' can be positive/negative int, 'GmSc' can be positive/negative int
 
 if __name__ == "__main__":
-  file_path = '../data_ingestion/data/2021-22_Season.csv'
+  file_path = os.path.join(os.path.dirname(__file__), '../data_ingestion/data/2021-22_Season.csv')
   process_raw_data(file_path)
