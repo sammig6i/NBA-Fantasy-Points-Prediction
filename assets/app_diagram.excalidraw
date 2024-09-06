@@ -79,7 +79,7 @@
       "containerId": null,
       "originalText": "User",
       "lineHeight": 1.25,
-      "baseline": 27
+      "baseline": 26
     },
     {
       "type": "rectangle",
@@ -301,7 +301,7 @@
       "containerId": null,
       "originalText": "DATA SOURCES",
       "lineHeight": 1.25,
-      "baseline": 27
+      "baseline": 26
     },
     {
       "type": "rectangle",
@@ -375,7 +375,7 @@
       "containerId": null,
       "originalText": "FEATURE STORES",
       "lineHeight": 1.25,
-      "baseline": 27
+      "baseline": 26
     },
     {
       "type": "rectangle",
@@ -457,7 +457,7 @@
       "containerId": "o2e9L-c7oOL-c_J7FW2VT",
       "originalText": "Online Feature Store",
       "lineHeight": 1.25,
-      "baseline": 27
+      "baseline": 26
     },
     {
       "type": "rectangle",
@@ -539,7 +539,7 @@
       "containerId": "VrXuX7C5bchyO08pDp29U",
       "originalText": "Offline Feature Store",
       "lineHeight": 1.25,
-      "baseline": 27
+      "baseline": 26
     },
     {
       "type": "rectangle",
@@ -625,7 +625,7 @@
       "containerId": null,
       "originalText": "MODEL REGISTRY",
       "lineHeight": 1.25,
-      "baseline": 27
+      "baseline": 26
     },
     {
       "type": "rectangle",
@@ -703,7 +703,7 @@
       "containerId": "BpBGjTRkW-qF9MReO7P4N",
       "originalText": "Model Artifacts",
       "lineHeight": 1.25,
-      "baseline": 27
+      "baseline": 26
     },
     {
       "type": "rectangle",
@@ -781,7 +781,7 @@
       "containerId": "BJsBLrv0l01nNK_NeYtSj",
       "originalText": "ML Metadata",
       "lineHeight": 1.25,
-      "baseline": 27
+      "baseline": 26
     },
     {
       "type": "rectangle",
@@ -863,7 +863,7 @@
       "containerId": "XYMA_taw2aMzPCkopxLjU",
       "originalText": "Data Ingestion Service",
       "lineHeight": 1.25,
-      "baseline": 25
+      "baseline": 24
     },
     {
       "type": "rectangle",
@@ -945,7 +945,7 @@
       "containerId": "k3Isfy27mbUK_2WF9FQyX",
       "originalText": "Data Processing Service",
       "lineHeight": 1.25,
-      "baseline": 25
+      "baseline": 24
     },
     {
       "type": "rectangle",
@@ -1101,7 +1101,7 @@
       "containerId": null,
       "originalText": "DATA PIPELINE",
       "lineHeight": 1.25,
-      "baseline": 27
+      "baseline": 26
     },
     {
       "type": "arrow",
@@ -1332,12 +1332,12 @@
       "containerId": "yzbJsBpqZUWbphCEB3_qx",
       "originalText": "Fetch",
       "lineHeight": 1.25,
-      "baseline": 27
+      "baseline": 26
     },
     {
       "type": "arrow",
-      "version": 4933,
-      "versionNonce": 276603712,
+      "version": 4936,
+      "versionNonce": 207463092,
       "isDeleted": false,
       "id": "48uSxxzP5xLo_GIb3QXz0",
       "fillStyle": "solid",
@@ -1346,8 +1346,8 @@
       "roughness": 1,
       "opacity": 100,
       "angle": 0,
-      "x": 951.0665505949463,
-      "y": -346.37129552002193,
+      "x": 941.3096372908076,
+      "y": -350.0456644386728,
       "strokeColor": "#1e1e1e",
       "backgroundColor": "transparent",
       "width": 406.43446321928434,
@@ -1357,26 +1357,18 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1725325374259,
+      "updated": 1725568546270,
       "link": null,
       "locked": false,
       "startBinding": {
         "elementId": "tqrbimIWtmO6HGOw77ZAa",
-        "focus": 0.8217730705919065,
-        "gap": 4.999999999999943,
-        "fixedPoint": [
-          0.9108865352959533,
-          -0.010198763848071168
-        ]
+        "focus": 0.7993977372548076,
+        "gap": 8.674368918650828
       },
       "endBinding": {
         "elementId": "RoVyv1QIYlI_13CNl7xEk",
-        "focus": 0.0008821287712660375,
-        "gap": 5.000000000000227,
-        "fixedPoint": [
-          -0.004252707734898623,
-          0.49955893561436715
-        ]
+        "focus": 0.0332947941651349,
+        "gap": 14.756913304138834
       },
       "lastCommittedPoint": null,
       "startArrowhead": null,
@@ -1746,7 +1738,7 @@
       "containerId": "dM87mTNmVJOX89JAuyymE",
       "originalText": "Model Development",
       "lineHeight": 1.25,
-      "baseline": 27
+      "baseline": 26
     },
     {
       "type": "rectangle",
@@ -1834,7 +1826,7 @@
       "containerId": "995qbjzdq6lEJ_MmNzshr",
       "originalText": "Model Training",
       "lineHeight": 1.25,
-      "baseline": 27
+      "baseline": 26
     },
     {
       "type": "rectangle",
@@ -1922,7 +1914,7 @@
       "containerId": "U_43ckdlrB7aW4EicjOzC",
       "originalText": "Model Serving",
       "lineHeight": 1.25,
-      "baseline": 27
+      "baseline": 26
     },
     {
       "type": "arrow",
@@ -2099,7 +2091,7 @@
       "containerId": null,
       "originalText": "ML LIFECYCLE",
       "lineHeight": 1.25,
-      "baseline": 27
+      "baseline": 26
     },
     {
       "type": "rectangle",
@@ -2177,7 +2169,7 @@
       "containerId": "XodWDlYgGA5Anq7RUVqd5",
       "originalText": "Streamlist App",
       "lineHeight": 1.25,
-      "baseline": 27
+      "baseline": 26
     },
     {
       "type": "rectangle",
@@ -2297,7 +2289,7 @@
       "containerId": "RUIRe2FZ10q1DhxON0O0n",
       "originalText": "Real-time Prediction Service",
       "lineHeight": 1.25,
-      "baseline": 59
+      "baseline": 58
     },
     {
       "type": "rectangle",
@@ -2375,7 +2367,7 @@
       "containerId": "OqbULElPYleXmJsJ5d8WQ",
       "originalText": "Batch Prediction Service",
       "lineHeight": 1.25,
-      "baseline": 26
+      "baseline": 25
     },
     {
       "type": "arrow",
