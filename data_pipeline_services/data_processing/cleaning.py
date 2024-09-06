@@ -19,4 +19,7 @@ def connect_db():
     print(f"Error while connecting to PostgreSQL: {err}")
     return None
   
-if 
+# TODO load raw data, assign unique IDs to players and games
+
+if __name__ == "__main__":
+  connection = connect_db()
