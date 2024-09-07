@@ -169,7 +169,7 @@ def clean_and_prepare_player_stats(df: pd.DataFrame, player_id_map: dict, game_i
           row['TRB'], row['AST'], row['STL'], row['BLK'], row['TOV'], row['PF'], row['PTS'], row['GmSc'], 
           row['+-']
       ))
-s
+
   connection.commit()
 
 
