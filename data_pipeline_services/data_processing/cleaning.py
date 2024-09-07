@@ -40,11 +40,20 @@ def convert_team_names_to_abbreviations(df: pd.DataFrame) -> pd.DataFrame:
   df['Team'] = df['Team'].map(TEAM_ABBREVIATIONS_REVERSED)
   df['Opponent'] = df['Opponent'].map(TEAM_ABBREVIATIONS_REVERSED)
   
-  if df['Team'].isnull().any():
-    print("Warning: Some teams could not be mapped to abbreviations.")
-  if df['Opponent'].isnull().any():
-    print("Warning: Some opponents could not be mapped to abbreviations.")
-  
+  return df
+
+def remove_dnp_and_zero_minutes(df: pd.DataFrame) -> pd.DataFrame:
+  """
+  Remove rows where players either have 'DNP' in the stats or 0 minutes played (MP == '0:00').
+  """
+  df = df[~df['MP'].isin(['DNP', '0:00'])]
+  return df
+
+def convert_mp_to_minutes(df: pd.DataFrame) -> pd.DataFrame:
+  """
+  Convert original MM:SS format in 'MP' column to total minutes as a float.
+  """
+  df['MP'] = df['MP'].apply(lambda x: sum(int(t) * 60**i for i, t in enumerate(reversed(x.split(':')))) / 60 if isinstance(x, str) else 0)
   return df
 
 
@@ -111,7 +120,6 @@ def clean_and_prepare_player_stats(df: pd.DataFrame, player_id_map: dict, game_i
     game_date = pd.to_datetime(row['Date'], format='%Y%m%d').strftime('%Y-%m-%d')
     team = row['Team']
     opponent = row['Opponent']
-    game_link = row['GameLink']
 
     player_id = player_id_map.get(row['Name'])
     game_id = game_id_map.get((game_date, team, opponent))
@@ -159,8 +167,15 @@ def process_raw_data(file_path: str) -> None:
 
   connection.close()
 
-#! Validate columns to be correct data types 'MP' -> from time to float '+-' can be positive/negative int, 'GmSc' can be positive/negative int
+
+#! Validate columns to be correct data types '+-' -> positive/negative int, 'GmSc' -> positive/negative float
+# TODO function to convert 'MP' to represent time as a float
 
 if __name__ == "__main__":
   file_path = os.path.join(os.path.dirname(__file__), '../data_ingestion/data/2021-22_Season.csv')
-  process_raw_data(file_path)
+  # process_raw_data(file_path)
+  raw_df = load_raw_data(file_path)
+  df = remove_duplicates(raw_df)
+  df = remove_dnp_and_zero_minutes(df)
+  cleaned_df = convert_mp_to_minutes(df)
+  print(cleaned_df['MP'])
