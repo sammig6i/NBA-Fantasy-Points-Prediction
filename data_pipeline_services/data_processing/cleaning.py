@@ -25,6 +25,7 @@ def connect_db() -> connection | None:
     return None
   
 
+# Data Cleaning and Processing
 def load_raw_data(file_path: str) -> pd.DataFrame:
   """
   Load raw csv file into pandas Dataframe.
@@ -69,6 +70,7 @@ def remove_duplicates(df: pd.DataFrame) -> pd.DataFrame:
   return df_cleaned
 
 
+# Assign Unique IDs
 def generate_game_id(game_date: str, team: str, opponent: str) -> str:
   """
   Generate a unique ID by hashing combination of game date, home team, and away team
@@ -126,7 +128,7 @@ def assign_game_ids(df: pd.DataFrame, connection: connection) -> dict:
             VALUES (%s, %s, %s, %s, %s) 
             ON CONFLICT (game_link) DO NOTHING 
             RETURNING game_id;
-        """, (game_id, game_date, home_team, away_team, game_link))
+          """, (game_id, game_date, home_team, away_team, game_link))
     
     game_id_map[(game_date, home_team, away_team)] = game_id
 
@@ -134,6 +136,7 @@ def assign_game_ids(df: pd.DataFrame, connection: connection) -> dict:
   return game_id_map
 
 
+# Prepare Player Stats
 def clean_and_prepare_player_stats(df: pd.DataFrame, player_id_map: dict, game_id_map: dict, connection: connection) -> None:
   """
   Insert the cleaned player stats into the PlayerStats table in the database.
@@ -173,28 +176,49 @@ def clean_and_prepare_player_stats(df: pd.DataFrame, player_id_map: dict, game_i
   connection.commit()
 
 
+# Clear Database
+def clear_database(connection: connection):
+  cursor = connection.cursor()
+
+  try:
+    cursor.execute("""
+                  TRUNCATE TABLE PlayerStats, Games, Players RESTART IDENTITY CASCADE;
+                  """)
+    connection.commit()
+    print("Database cleared.")
+  except Exception as e:
+    connection.rollback()
+    print(f"Error clearing the datbase: {e}")
+  finally:
+    cursor.close()
+
+
+# Process Raw Data
 def process_raw_data(file_path: str) -> None:
   try:
-    # 1 DB connection
+    # DB connection
     connection = connect_db()
     if not connection:
       print("Database connection failed.")
       return
+    
+    # clear database
+    clear_database(connection)
 
-    #2 load raw data
+    # load raw data
     raw_df = load_raw_data(file_path)
 
-    #3 Data cleaning and preprocessing
+    # Data cleaning and preprocessing
     df = remove_duplicates(raw_df)
     df = convert_team_names_to_abbreviations(df)
     df = remove_dnp_and_zero_minutes(df)
     df = convert_mp_to_minutes(df)
 
-    #4 assign unique IDs for players and games
+    # assign unique IDs for players and games
     player_id_map = assign_player_ids(df, connection)
     game_id_map = assign_game_ids(df, connection)
 
-    #5 Insert cleaned player stats into database
+    # Insert cleaned player stats into database
     clean_and_prepare_player_stats(df, player_id_map, game_id_map, connection)
   except Exception as e:
     print(f"Error processing raw data: {e}")
