@@ -1,13 +1,40 @@
+from datetime import datetime
+from typing import List, Optional, Tuple
 import requests
 from bs4 import BeautifulSoup
 import time
 import pandas as pd
 import random
-from utils import normalize_name, save_dataframes_to_csv, handle_http_error, handle_general_error
-from config import BASE_URL, MONTH_DICT, TEAM_ABBREVIATIONS
+from .utils import normalize_name, save_dataframes_to_csv, handle_http_error, handle_general_error
+from .config import BASE_URL, MONTH_DICT, TEAM_ABBREVIATIONS
+from minio import Minio
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
-def get_month_links(season):
+minio_client = Minio(
+  "127.0.0.1:9001",
+  access_key=os.getenv('MINIO_ROOT_USER'),
+  secret_key=os.getenv('MINIO_ROOT_PASSWORD'),
+  secure=False
+)
+
+def upload_to_minio(file_path: str, bucket_name: str, object_name: str) -> None:
+  """
+  Upload a file to the MinIO bucket
+  """
+  try:
+    if not minio_client.bucket_exists(bucket_name):
+      minio_client.make_bucket(bucket_name)
+    minio_client.fput_object(bucket_name, object_name, file_path)
+    print(f"File {object_name} successfully uploaded to bucket {bucket_name}")
+  except Exception as e:
+    print(f"Failed to upload {object_name}: {e}")
+
+  
+
+def get_month_links(season: str) -> Optional[List[Tuple[str, str]]]:
   """
   Fetches the month links from the Basketball Reference website for a given NBA season.
 
@@ -17,7 +44,7 @@ def get_month_links(season):
   Returns:
     tuple: A tuple containing:
       - month_link_list (list of tuples): A list of tuples where each tuple contains:
-        - link_text (str): The name of the month (e.g., 'october', 'november').
+        - name of the month (str): The name of the month (e.g., 'october', 'november').
         - url (str): The full URL to the page for that month.
   """
   try:
@@ -58,7 +85,10 @@ def get_month_links(season):
 
 
 
-def get_box_score_links(month_link_list):
+def get_box_score_links(month_link_list: List[Tuple[str, str]], 
+                        start_date: Optional[str] = None, 
+                        end_date: Optional[str] = None
+                        ) -> Tuple[Optional[List[List[str]]], Optional[List[List[str]]]] :
   """ 
   Fetches box score links and corresponding game dates from the given list of month page links.
 
@@ -66,16 +96,19 @@ def get_box_score_links(month_link_list):
     month_link_list (list of tuples): List of tuples where each tuple contains:
       - month (str): The name of the month (e.g., 'october').
       - page (str): The full URL to the page for that month.
+    start_data: The start date for filtering games (format: YYYYMMDD)
+    end_date: The end date for filtering games (format: YYYYMMDD)
 
   Returns:
     tuple: A tuple containing:
       - box_link_array (list of lists): A list of lists where each inner list contains the URLs to box scores for the games played in the given month.
       - all_dates (list of lists): A list of lists where each inner list contains the corresponding dates (formatted as 'YYYYMMDD') for the box scores in the same order as `box_link_array`.
-
-  If an HTTP error occurs, the function returns (None, None).
   """
   box_link_array = []
   all_dates = []
+
+  start_date = datetime.strptime(start_date, '%Y%m%d') if start_date else None
+  end_date = datetime.strptime(start_date, '%Y%m%d') if end_date else None
 
   for _, page in month_link_list:
     page_link_list = []
@@ -91,7 +124,6 @@ def get_box_score_links(month_link_list):
       for i in box_scores:
         if i.text.strip() == 'Box Score':
           page_link_list.append(f"{BASE_URL}{i['href']}")
-        if ',' in i.text.strip():
           date_parts = i.text.strip().split(', ')
           year = date_parts[2]
           day = date_parts[1].split(' ')[1].zfill(2)
@@ -112,7 +144,9 @@ def get_box_score_links(month_link_list):
 
 
 # from https://medium.com/@HeeebsInc/using-machine-learning-to-predict-daily-fantasy-basketball-scores-part-i-811de3c54a98
-def extract_player_data(box_links, all_dates):
+def extract_player_data(box_links: List[List[str]], 
+                        all_dates: List[List[str]]
+                        ) -> pd.DataFrame:
   """
   Extract player statistics from each box score link and save the data to a DataFrame.
 
@@ -146,7 +180,6 @@ def extract_player_data(box_links, all_dates):
 
         home_team_abbr = link.split('/')[-1].split('.')[0][-3:]  # https://www.basketball-reference.com/boxscores/202310240DEN.html
         home_team = TEAM_ABBREVIATIONS.get(home_team_abbr, None)
-        print(home_team)
 
         tables = soup.find_all('table', id=lambda x: x and x.endswith('-game-basic'))
         team_names = [table.find('caption').text.split(' Basic and Advanced Stats Table')[0].strip() for table in tables]
@@ -196,16 +229,17 @@ if __name__ == "__main__":
   month_links = get_month_links(season)
   if month_links:
     print(f"Testing the first month links for the {season} season.")
-    test_month_links = month_links[:1]
-    box_score_links, all_dates = get_box_score_links(test_month_links)
+    print(month_links)
+    # test_month_links = month_links[:1]
+    # box_score_links, all_dates = get_box_score_links(test_month_links)
 
-    if box_score_links and all_dates:
-      print(f"Found {len(box_score_links)} sets of box score links.")
-      limited_box_score_links = box_score_links[0][:5]
-      limited_dates = all_dates[0][:5]
-      stat_df = extract_player_data([limited_box_score_links], [limited_dates])
-      save_dataframes_to_csv(stat_df, season, output_dir="data")
-    else:
-      print("No box score links found.")
+    # if box_score_links and all_dates:
+    #   print(f"Found {len(box_score_links)} sets of box score links.")
+    #   limited_box_score_links = box_score_links[0][:5]
+    #   limited_dates = all_dates[0][:5]
+    #   stat_df = extract_player_data([limited_box_score_links], [limited_dates])
+    #   save_dataframes_to_csv(stat_df, season, output_dir="data")
+    # else:
+    #   print("No box score links found.")
   else:
     print("No month links found.")

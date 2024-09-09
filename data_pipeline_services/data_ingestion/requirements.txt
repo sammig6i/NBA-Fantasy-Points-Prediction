@@ -1,9 +1,12 @@
 appnope==0.1.4
+argon2-cffi==23.1.0
+argon2-cffi-bindings==21.2.0
 asttokens==2.4.1
 bandit==1.7.5
 beautifulsoup4==4.12.3
 bs4==0.0.2
 certifi==2024.8.30
+cffi==1.17.1
 charset-normalizer==3.3.2
 comm==0.2.2
 coverage==7.3.2
@@ -24,6 +27,7 @@ markdown-it-py==3.0.0
 matplotlib-inline==0.1.7
 mccabe==0.7.0
 mdurl==0.1.2
+minio==7.2.8
 nest-asyncio==1.6.0
 numpy==2.1.0
 packaging==24.1
@@ -39,6 +43,8 @@ ptyprocess==0.7.0
 pure_eval==0.2.3
 pyaml==24.7.0
 pycodestyle==2.11.1
+pycparser==2.22
+pycryptodome==3.20.0
 pyflakes==3.1.0
 Pygments==2.18.0
 pytest==7.4.3
