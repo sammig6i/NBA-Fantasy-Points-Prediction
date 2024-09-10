@@ -4,7 +4,7 @@ import psycopg2
 import logging
 from dotenv import load_dotenv
 from psycopg2.extensions import connection
-from data_ingestion.config import TEAM_ABBREVIATIONS
+from data_pipeline_services.data_ingestion.config.variables import TEAM_ABBREVIATIONS
 from .validate import validate_cleaned_data
 import hashlib
 

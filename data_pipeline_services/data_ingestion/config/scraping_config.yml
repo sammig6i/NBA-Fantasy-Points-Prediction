@@ -1,0 +1,12 @@
+scraping_job:
+  season: "2021-22"
+  start_date: "20211001"
+  end_date: "20221031"
+
+minio:
+  endpoint: "127.0.0.1:9001"
+  access_key: "${MINIO_ROOT_USER}"
+  secret_key: "${MINIO_ROOT_PASSWORD}"
+  secure: false
+  bucket_name: "nba-raw-data"
+  output_dir: "nba_data"
