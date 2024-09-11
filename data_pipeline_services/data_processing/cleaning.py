@@ -1,12 +1,15 @@
 import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
 import pandas as pd
 import psycopg2
 import logging
 from dotenv import load_dotenv
 from psycopg2.extensions import connection
-from data_pipeline_services.data_ingestion.config.variables import TEAM_ABBREVIATIONS
 from .validate import validate_cleaned_data
 import hashlib
+from data_pipeline_services.data_ingestion.config.variables import TEAM_ABBREVIATIONS
 
 load_dotenv()
 logging.basicConfig(level=logging.ERROR)
@@ -212,7 +215,6 @@ def clear_database(connection: connection):
     print(f"Error clearing the datbase: {e}")
   finally:
     cursor.close()
-
 
 
 # Process Raw Data
