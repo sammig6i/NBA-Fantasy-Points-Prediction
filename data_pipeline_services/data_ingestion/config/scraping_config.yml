@@ -1,7 +1,11 @@
 scraping_job:
-  season: "2021-22"
-  start_date: "20211001"
-  end_date: "20211031"
+  season: "2023-24"
+  start_date: "2023-11-20"
+  end_date: "2023-11-30"
+
+default_nba_dates:
+  start: "10-01"
+  end: "06-30"
 
 minio:
   endpoint: "127.0.0.1:9001"

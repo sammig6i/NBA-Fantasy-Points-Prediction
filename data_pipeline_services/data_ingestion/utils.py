@@ -42,12 +42,12 @@ def handle_general_error(error, link):
   print(f"Error occurred for {link}: {str(error)}")
 
 
-def validate_date_format(date_str: str) -> datetime:
+def validate_date_format(date_str: str, year: int) -> datetime:
   """
-    Validates that the input string is in the correct YYYY-MM-DD format.
+    Validate date format and return datetime.
   """
   try:
-    return datetime.strptime(date_str, '%Y-%m-%d')
+    return datetime.strptime(f"{year}-{date_str}", '%Y-%m-%d')
   except ValueError:
     raise ValueError(f"Invalid date format: {date_str}. Expected format: YYYY-MM-DD.")
   
@@ -90,9 +90,9 @@ def filter_relevant_months(month_link_list: List[Tuple[str, str]],
   for month, link in month_link_list:
     month_start_str, month_end_str = month_start_end_dates_with_years.get(month, (None, None))
     if month_start_str and month_end_str:
-      month_start_dt = validate_date_format(month_start_str)
-      month_end_dt = validate_date_format(month_end_str)
-          
+      month_start_dt = datetime.strptime(month_start_str, '%Y-%m-%d')
+      month_end_dt = datetime.strptime(month_end_str, '%Y-%m-%d')
+        
       if month_end_dt >= start_date_dt and month_start_dt <= end_date_dt:
         relevant_month_links.append((month, link))
     
