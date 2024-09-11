@@ -38,3 +38,18 @@ TEAM_ABBREVIATIONS = {
   'UTA': 'Utah Jazz',
   'WAS': 'Washington Wizards'
 }
+
+MONTH_START_END_DATES = {
+  'january': ('01-01', '01-31'),
+  'february': ('02-01', '02-28'),
+  'march': ('03-01', '03-31'),
+  'april': ('04-01', '04-30'),
+  'may': ('05-01', '05-31'),
+  'june': ('06-01', '06-30'),
+  'july': ('07-01', '07-31'),
+  'august': ('08-01', '08-31'),
+  'september': ('09-01', '09-30'),
+  'october': ('10-01', '10-31'),
+  'november': ('11-01', '11-30'),
+  'december': ('12-01', '12-31')
+}

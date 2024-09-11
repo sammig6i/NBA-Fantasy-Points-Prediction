@@ -1,7 +1,7 @@
 scraping_job:
   season: "2021-22"
   start_date: "20211001"
-  end_date: "20221031"
+  end_date: "20211031"
 
 minio:
   endpoint: "127.0.0.1:9001"

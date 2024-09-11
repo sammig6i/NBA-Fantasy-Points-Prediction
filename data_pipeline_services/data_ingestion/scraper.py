@@ -5,8 +5,16 @@ from bs4 import BeautifulSoup
 import time
 import pandas as pd
 import random
-from .utils import normalize_name, save_dataframes_to_csv, handle_http_error, handle_general_error
-from .config.variables import BASE_URL, MONTH_DICT, TEAM_ABBREVIATIONS
+from .utils import (
+  normalize_name, 
+  save_dataframes_to_csv, 
+  handle_http_error, 
+  handle_general_error,
+  validate_date_format,
+  apply_year_to_months,
+  filter_relevant_months
+  )
+from .config.variables import BASE_URL, TEAM_ABBREVIATIONS
 from minio import Minio
 from dotenv import load_dotenv
 import os
@@ -58,7 +66,7 @@ def get_month_links(season: str) -> Optional[List[Tuple[str, str]]]:
         - url (str): The full URL to the page for that month.
   """
   try:
-    start_year, end_year = season.split('-')
+    start_year, end_year = season.split('-') # 2021-22
     start_year = int(start_year)
     if len(end_year) != 2 or not end_year.isdigit():
       raise ValueError
@@ -99,15 +107,15 @@ def get_box_score_links(month_link_list: List[Tuple[str, str]],
                         start_date: Optional[str] = None, 
                         end_date: Optional[str] = None
                         ) -> Tuple[Optional[List[List[str]]], Optional[List[List[str]]]]:
-  """ 
+  """
   Fetches box score links and corresponding game dates within a given date range (for batch scraping).
 
   Inputs:
     month_link_list (list of tuples): List of tuples where each tuple contains:
       - month (str): The name of the month (e.g., 'october').
       - page (str): The full URL to the page for that month.
-    start_data: The start date for filtering games (format: YYYYMMDD)
-    end_date: The end date for filtering games (format: YYYYMMDD)
+    start_data: The start date for filtering games (format: YYYY-MM-DD)
+    end_date: The end date for filtering games (format: YYYY-MM-DD)
 
   Returns:
     tuple: A tuple containing:
@@ -118,24 +126,23 @@ def get_box_score_links(month_link_list: List[Tuple[str, str]],
   end_date_dt = None
 
   if start_date:
-    try:
-      start_date_dt = datetime.strptime(start_date, '%Y%m%d')
-    except ValueError:
-      raise ValueError(f"Invalid start date format: {start_date}. Expected format: YYYYMMDD.")
+    start_date_dt = validate_date_format(start_date)
     
   if end_date:
-    try:
-      end_date_dt = datetime.strptime(end_date, '%Y%m%d')
-    except ValueError:
-      raise ValueError(f"Invalid end date format: {end_date}. Expected format: YYYYMMDD.")
+    end_date_dt = validate_date_format(end_date)
     
   if start_date_dt and end_date_dt and start_date_dt > end_date_dt:
     raise ValueError("Start date cannot be after end date.")
-    
+
+  start_year = start_date_dt.year if start_date_dt else None
+  end_year = end_date_dt.year if end_date_dt else None 
+
+  relevant_month_link_list = filter_relevant_months(month_link_list, start_date_dt, end_date_dt, start_year, end_year) 
+  
   box_link_array = []
   all_dates = []
 
-  for _, page in month_link_list:
+  for _, page in relevant_month_link_list:
     page_link_list = []
     page_date_list = []
     try:
@@ -143,28 +150,26 @@ def get_box_score_links(month_link_list: List[Tuple[str, str]],
       response.raise_for_status()
       soup = BeautifulSoup(response.text, 'html.parser')
 
-      table = soup.find_all('tbody')
-      box_scores = table[0].find_all('a', href=True)
+      rows = soup.find_all('tr')
+      for row in rows:
+        date_cell = row.find('th', attrs={'data-stat': 'date_game'})
+        if date_cell and date_cell.has_attr('csk'):
+          game_date_str = date_cell['csk'][:8]
+          game_date_dt = datetime.strptime(game_date_str, '%Y%m%d')
 
-      for i in box_scores:
-        if i.text.strip() == 'Box Score':
-          date_parts = i.text.strip().split(', ')
-          year = date_parts[2]
-          day = date_parts[1].split(' ')[1].zfill(2)
-          month_code = MONTH_DICT[date_parts[1].split(' ')[0]]
-          game_date = f'{year}{month_code}{day}'
-          game_date_dt = datetime.strptime(game_date, '%Y%m%d')
-          
           if (start_date_dt and end_date_dt) and not (start_date_dt <= game_date_dt <= end_date_dt):
             continue
 
-          page_link_list.append(f"{BASE_URL}{i['href']}")
-          page_date_list.append(game_date)
-      
+          box_score_cell = row.find('td', attrs={'data-stat': 'box_score_text'})
+          if box_score_cell and box_score_cell.find('a', href=True):
+            box_score_link = f"{BASE_URL}{box_score_cell.find('a')['href']}"
+            page_link_list.append(box_score_link)
+            page_date_list.append(game_date_dt.strftime('%Y-%m-%d'))
+
       if page_link_list:
         box_link_array.append(page_link_list)
         all_dates.append(page_date_list)
-      time.sleep(10)
+      time.sleep(1)
 
     except requests.exceptions.HTTPError:
       handle_http_error(response)
@@ -172,7 +177,6 @@ def get_box_score_links(month_link_list: List[Tuple[str, str]],
       handle_general_error(e, page)
 
   return box_link_array, all_dates
-
 
 
 
@@ -258,20 +262,50 @@ def extract_player_data(box_links: List[List[str]],
 
 if __name__ == "__main__":
   season = '2021-22'
-  month_links = get_month_links(season)
-  if month_links:
-    print(f"Testing the first month links for the {season} season.")
-    print(month_links)
-    # test_month_links = month_links[:1]
-    # box_score_links, all_dates = get_box_score_links(test_month_links)
+  month_links = [
+    ('october', 'https://www.basketball-reference.com/leagues/NBA_2022_games-october.html'), 
+    ('november', 'https://www.basketball-reference.com/leagues/NBA_2022_games-november.html'), 
+    # ('december', 'https://www.basketball-reference.com/leagues/NBA_2022_games-december.html'), 
+    # ('january', 'https://www.basketball-reference.com/leagues/NBA_2022_games-january.html'), 
+    # ('february', 'https://www.basketball-reference.com/leagues/NBA_2022_games-february.html'), 
+    # ('march', 'https://www.basketball-reference.com/leagues/NBA_2022_games-march.html'), 
+    # ('april', 'https://www.basketball-reference.com/leagues/NBA_2022_games-april.html'), 
+    # ('may', 'https://www.basketball-reference.com/leagues/NBA_2022_games-may.html'), 
+    # ('june', 'https://www.basketball-reference.com/leagues/NBA_2022_games-june.html')
+    ]
 
-    # if box_score_links and all_dates:
-    #   print(f"Found {len(box_score_links)} sets of box score links.")
-    #   limited_box_score_links = box_score_links[0][:5]
-    #   limited_dates = all_dates[0][:5]
-    #   stat_df = extract_player_data([limited_box_score_links], [limited_dates])
-    #   save_dataframes_to_csv(stat_df, season, output_dir="data")
-    # else:
-    #   print("No box score links found.")
-  else:
-    print("No month links found.")
+  start_time = time.time()
+  box_score_links, all_dates = get_box_score_links(month_links)
+  end_time = time.time()
+
+  total_box_score_links = sum(len(links) for links in box_score_links)
+  total_dates = sum(len(dates) for dates in all_dates)
+  print(f"Box Score Links: {box_score_links}\n")
+  print(f"Game Dates: {all_dates}\n")
+  print(f"Total Box Score Links: {total_box_score_links}")
+  print(f"Total Game Dates: {total_dates}")
+  print(f"Total execution time for get_box_score_links: {end_time - start_time:.4f} seconds")
+
+  # if month_links:
+  #   print(f"Testing the first month links for the {season} season.")
+  #   print(f"Month Links: {month_links}\n\n")
+  #   # test_month_links = month_links[:4]
+  
+  #   execution_time = timeit.timeit(
+  #         stmt="get_box_score_links(month_links, start_date='2022-06-02', end_date='2022-06-16')",
+  #         setup="from __main__ import get_box_score_links, month_links",
+  #         number=1
+  #       )
+  #   print(f"Total execution time for get_box_score_links: {execution_time:.4f} seconds")
+
+  #   box_score_links, all_dates = get_box_score_links(month_links, start_date='2022-06-02', end_date='2022-06-16')
+
+  #   print(f"Box Score Links: {box_score_links}\n")
+  #   print(f"Game Dates: {all_dates}\n")
+
+  #   total_box_score_links = sum(len(links) for links in box_score_links)
+  #   total_dates = sum(len(dates) for dates in all_dates)
+  #   print(f"Total Box Score Links: {total_box_score_links}")
+  #   print(f"Total Game Dates: {total_dates}")
+  # else:
+  #   print("No month links found.")
