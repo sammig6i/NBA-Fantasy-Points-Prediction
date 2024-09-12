@@ -13,7 +13,7 @@ def normalize_name(name):
   without_diacritics = ''.join(c for c in normalized if not unicodedata.combining(c))
   return without_diacritics.lower()
 
-
+#? NEEDED?
 def save_dataframes_to_csv(df, season, output_dir="output"):
   if not os.path.exists(output_dir):
     os.makedirs(output_dir)
@@ -42,17 +42,7 @@ def handle_general_error(error, link):
   print(f"Error occurred for {link}: {str(error)}")
 
 
-def validate_date_format(date_str: str, year: int) -> datetime:
-  """
-    Validate date format and return datetime.
-  """
-  try:
-    return datetime.strptime(f"{year}-{date_str}", '%Y-%m-%d')
-  except ValueError:
-    raise ValueError(f"Invalid date format: {date_str}. Expected format: YYYY-MM-DD.")
-  
-
-def apply_year_to_months(start_year: int, end_year: int) -> dict:
+def apply_year_to_months(start_year_full: int, end_year_full: int) -> dict:
   """ 
   Dynamically apply the correct year to year-agnostic months, 
   and handle leap years for February.
@@ -61,9 +51,9 @@ def apply_year_to_months(start_year: int, end_year: int) -> dict:
 
   for month, (month_start, month_end) in MONTH_START_END_DATES.items():
     if month in ['september','october', 'november', 'december']:  # Belongs to the start year
-      year = start_year
+      year = start_year_full
     else:
-      year = end_year
+      year = end_year_full
 
     if month == 'february' and calendar.isleap(year):
       month_end = '02-29'
@@ -79,13 +69,13 @@ def apply_year_to_months(start_year: int, end_year: int) -> dict:
 def filter_relevant_months(month_link_list: List[Tuple[str, str]], 
                            start_date_dt: datetime,
                            end_date_dt: datetime, 
-                           start_year: int, 
-                           end_year: int) -> List[Tuple[str, str]]:
+                           start_year_full: int, 
+                           end_year_full: int) -> List[Tuple[str, str]]:
   """
   Filter out irrelevant months based on the start and end dates.
   """
   relevant_month_links = []
-  month_start_end_dates_with_years = apply_year_to_months(start_year, end_year)
+  month_start_end_dates_with_years = apply_year_to_months(start_year_full, end_year_full)
 
   for month, link in month_link_list:
     month_start_str, month_end_str = month_start_end_dates_with_years.get(month, (None, None))
@@ -97,3 +87,25 @@ def filter_relevant_months(month_link_list: List[Tuple[str, str]],
         relevant_month_links.append((month, link))
     
   return relevant_month_links
+
+
+
+def adjust_dates_based_on_season(start_year_full: int, end_year_full: int, start_date: str, end_date: str) -> Tuple[str, str]:
+  """
+  Adjust the start and end dates based on the season.
+  Assigns the correct year to the dates provided based on the month.
+  """
+  start_month = int(start_date.split("-")[0])
+  end_month = int(end_date.split("-")[0])
+  
+  if start_month >= 10:  # October - December
+    adjusted_start_date = f"{start_year_full}-{start_date}"
+  else:
+    adjusted_start_date = f"{end_year_full}-{start_date}"
+  
+  if end_month >= 10:  
+    adjusted_end_date = f"{start_year_full}-{end_date}"
+  else:
+    adjusted_end_date = f"{end_year_full}-{end_date}"
+  
+  return adjusted_start_date, adjusted_end_date
