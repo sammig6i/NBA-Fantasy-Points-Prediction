@@ -12,43 +12,6 @@ from .utils import (
   filter_relevant_months,
   )
 from .config.variables import BASE_URL, TEAM_ABBREVIATIONS
-from minio import Minio
-from dotenv import load_dotenv
-import os
-import io
-import yaml
-
-load_dotenv()
-
-minio_client = Minio(
-  "127.0.0.1:9001",
-  access_key=os.getenv('MINIO_ROOT_USER'),
-  secret_key=os.getenv('MINIO_ROOT_PASSWORD'),
-  secure=False
-)
-
-def upload_to_minio(df: pd.DataFrame, bucket_name: str, object_name: str) -> None:
-  """
-  Upload a Dataframe to MinIO as a CSV from memory
-  """
-  try:
-    csv_buffer = io.StringIO()
-    df.to_csv(csv_buffer, index=False)
-    csv_buffer.seek(0)
-
-    if not minio_client.bucket_exists(bucket_name):
-      minio_client.make_bucket(bucket_name)
-    minio_client.put_object(
-      bucket_name, 
-      object_name, 
-      io.BytesIO(csv_buffer.getvalue().encode('utf-8')), 
-      len(csv_buffer.getvalue().encode('utf-8')), 
-      content_type='text/csv'
-      )
-    print(f"File {object_name} successfully uploaded to bucket {bucket_name}")
-  except Exception as e:
-    print(f"Failed to upload {object_name}: {e}")
-
 
 
 def get_month_links(season: str) -> Optional[Tuple[List[Tuple[str, str]], int, int]]:

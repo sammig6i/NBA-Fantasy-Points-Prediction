@@ -1,7 +1,7 @@
 scraping_job:
   season: "2023-24"
   start_date: "12-01" # MM-DD
-  end_date: "12-05" # MM-DD
+  end_date: "12-01" # MM-DD
 
 # if start_date and end_date empty
 default_nba_dates:
@@ -9,9 +9,10 @@ default_nba_dates:
   end: "06-30"
 
 minio:
-  endpoint: "127.0.0.1:9001"
-  access_key: "${MINIO_ROOT_USER}"
-  secret_key: "${MINIO_ROOT_PASSWORD}"
+  endpoint: "127.0.0.1:9000"
+  access_key: "MINIO_ROOT_USER"
+  secret_key: "MINIO_ROOT_PASSWORD"
   secure: false
   bucket_name: "nba-raw-data"
-  output_dir: "nba_data"
+  output_dir: "player_box_scores"
+

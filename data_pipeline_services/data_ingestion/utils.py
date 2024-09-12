@@ -13,17 +13,6 @@ def normalize_name(name):
   without_diacritics = ''.join(c for c in normalized if not unicodedata.combining(c))
   return without_diacritics.lower()
 
-#? NEEDED?
-def save_dataframes_to_csv(df, season, output_dir="output"):
-  if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
-
-  file_name = f"{season}_Season.csv"
-  file_path = os.path.join(output_dir, file_name)
-
-  df.to_csv(file_path, lineterminator='\n', index=False)
-  print(f'Saved game stats for the {season} season to {file_name}')
-
 
 def handle_http_error(response):
   """Handle HTTP errors."""
@@ -87,7 +76,6 @@ def filter_relevant_months(month_link_list: List[Tuple[str, str]],
         relevant_month_links.append((month, link))
     
   return relevant_month_links
-
 
 
 def adjust_dates_based_on_season(start_year_full: int, end_year_full: int, start_date: str, end_date: str) -> Tuple[str, str]:
