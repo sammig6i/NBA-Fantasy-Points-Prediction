@@ -40,9 +40,6 @@ if __name__ == "__main__":
   current_timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
   object_name = f"{output_dir}/nba_player_stats_{season}_{start_date}_to_{end_date}_{current_timestamp}.csv"
 
-  try:
-    upload_to_minio(df, bucket_name, object_name)
-    print(f"Data successfully uploaded to MinIO bucket '{bucket_name}' as '{object_name}'")
-  except Exception as e:
-    print(f"Error uploading data to MinIO: {str(e)}")
+  upload_to_minio(df, bucket_name, object_name)
+  print(f"Data successfully uploaded to MinIO bucket '{bucket_name}' as '{object_name}'")
   
