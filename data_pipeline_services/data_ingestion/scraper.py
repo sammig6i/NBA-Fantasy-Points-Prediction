@@ -5,13 +5,13 @@ from bs4 import BeautifulSoup
 import time
 import pandas as pd
 import random
-from .utils import (
+from utils import (
   normalize_name, 
   handle_http_error, 
   handle_general_error,
   filter_relevant_months,
   )
-from .config.variables import BASE_URL, TEAM_ABBREVIATIONS
+from config.variables import BASE_URL, TEAM_ABBREVIATIONS
 
 
 def get_month_links(season: str) -> Optional[Tuple[List[Tuple[str, str]], int, int]]:
@@ -26,6 +26,9 @@ def get_month_links(season: str) -> Optional[Tuple[List[Tuple[str, str]], int, i
       - month_link_list (list of tuples): A list of tuples where each tuple contains:
         - name of the month (str): The name of the month (e.g., 'october', 'november').
         - url (str): The full URL to the page for that month.
+      - start_year_full (int): The start year of the season.
+      - end_year_full (int): The end year of the season.
+    Or None if there's an error.
   """
   try:
     start_year, end_year = season.split('-') # 2021-22
@@ -34,7 +37,7 @@ def get_month_links(season: str) -> Optional[Tuple[List[Tuple[str, str]], int, i
       raise ValueError
   except(ValueError, AttributeError):
     print(f"Invalid season format: {season}. Expected format is 'YYYY-YY'.")
-    return None, None
+    return None
 
   end_year_full = start_year_full + 1 if end_year == '00' else int(str(start_year_full)[:2] + end_year)
   
@@ -44,23 +47,25 @@ def get_month_links(season: str) -> Optional[Tuple[List[Tuple[str, str]], int, i
   try:
     response = requests.get(start_url)
     response.raise_for_status()
+    
+    soup = BeautifulSoup(response.text, 'html.parser')
+    body = soup.find('body')
+
+    div_elements = body.find_all('div', class_='filter')
+    for div in div_elements:
+      a_tags = div.find_all('a', href=True)
+      for a_tag in a_tags:
+        link_text = a_tag.text.strip().lower()
+        if any(month in link_text for month in a_tag.text.strip().lower().split()):
+          month_link_list.append((link_text, f"{BASE_URL}{a_tag['href']}"))
+    
+    return month_link_list, start_year_full, end_year_full
   except requests.exceptions.HTTPError:
     handle_http_error(response)
   except Exception as e:
     handle_general_error(e, start_url)
   
-  soup = BeautifulSoup(response.text, 'html.parser')
-  body = soup.find('body')
-
-  div_elements = body.find_all('div', class_='filter')
-  for div in div_elements:
-    a_tags = div.find_all('a', href=True)
-    for a_tag in a_tags:
-      link_text = a_tag.text.strip().lower()
-      if any(month in link_text for month in a_tag.text.strip().lower().split()):
-        month_link_list.append((link_text, f"{BASE_URL}{a_tag['href']}"))
-    
-  return month_link_list, start_year_full, end_year_full
+  return None
 
 
 def get_box_score_links(month_link_list: List[Tuple[str, str]], 
@@ -76,62 +81,75 @@ def get_box_score_links(month_link_list: List[Tuple[str, str]],
     month_link_list (list of tuples): List of tuples where each tuple contains:
       - month (str): The name of the month (e.g., 'october').
       - page (str): The full URL to the page for that month.
-    start_data: The start date for filtering games (format: YYYY-MM-DD)
+    start_date: The start date for filtering games (format: YYYY-MM-DD)
     end_date: The end date for filtering games (format: YYYY-MM-DD)
-
-    empty start_date and end_date defaults to current season date range.
+    start_year: The start year of the season
+    end_year: The end year of the season
 
   Returns:
     tuple: A tuple containing:
       - box_link_array (list of lists): A list of lists where each inner list contains the URLs to box scores for the games played in the given date range.
-      - all_dates (list of lists): A list of lists where each inner list contains the corresponding dates (formatted as 'YYYYMMDD') for the box scores in the same order as `box_link_array`.
+      - all_dates (list of lists): A list of lists where each inner list contains the corresponding dates (formatted as 'YYYY-MM-DD') for the box scores in the same order as `box_link_array`.
+    Or (None, None) if there's an error.
   """
-  start_date_dt = datetime.strptime(start_date, '%Y-%m-%d')
-  end_date_dt = datetime.strptime(end_date, '%Y-%m-%d')
+  try:
+    start_date_dt = datetime.strptime(start_date, '%Y-%m-%d') if start_date else None
+    end_date_dt = datetime.strptime(end_date, '%Y-%m-%d') if end_date else None
+      
+    if start_date_dt and end_date_dt and start_date_dt > end_date_dt:
+      raise ValueError("Start date cannot be after end date.")
+
+    relevant_month_link_list = filter_relevant_months(month_link_list, start_date_dt, end_date_dt, start_year, end_year) 
     
-  if start_date_dt > end_date_dt:
-    raise ValueError("Start date cannot be after end date.")
+    box_link_array = []
+    all_dates = []
 
-  relevant_month_link_list = filter_relevant_months(month_link_list, start_date_dt, end_date_dt, start_year, end_year) 
+    for _, page in relevant_month_link_list:
+      page_link_list = []
+      page_date_list = []
+      try:
+        response = requests.get(page)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        rows = soup.find_all('tr')
+        for row in rows:
+          date_cell = row.find('th', attrs={'data-stat': 'date_game'})
+          if date_cell and date_cell.has_attr('csk'):
+            game_date_str = date_cell['csk'][:8]
+            game_date_dt = datetime.strptime(game_date_str, '%Y%m%d')
+
+            if (start_date_dt and end_date_dt) and not (start_date_dt <= game_date_dt <= end_date_dt):
+              continue
+
+            box_score_cell = row.find('td', attrs={'data-stat': 'box_score_text'})
+            if box_score_cell and box_score_cell.find('a', href=True):
+              box_score_link = f"{BASE_URL}{box_score_cell.find('a')['href']}"
+              page_link_list.append(box_score_link)
+              page_date_list.append(game_date_dt.strftime('%Y-%m-%d'))
+
+        if page_link_list:
+          box_link_array.append(page_link_list)
+          all_dates.append(page_date_list)
+        time.sleep(random.uniform(0.5, 2))
+
+      except requests.exceptions.HTTPError:
+        handle_http_error(response)
+      except Exception as e:
+        handle_general_error(e, page)
+
+    if not box_link_array or not all_dates:
+      print("No box score links or dates were found.")
+      return None, None
+
+    return box_link_array, all_dates
+
+  except ValueError as ve:
+    handle_general_error(ve, "Value error occurred")
+  except Exception as e:
+    handle_general_error(e, "An unexpected error occurred")
   
-  box_link_array = []
-  all_dates = []
-
-  for _, page in relevant_month_link_list:
-    page_link_list = []
-    page_date_list = []
-    try:
-      response = requests.get(page)
-      response.raise_for_status()
-      soup = BeautifulSoup(response.text, 'html.parser')
-
-      rows = soup.find_all('tr')
-      for row in rows:
-        date_cell = row.find('th', attrs={'data-stat': 'date_game'})
-        if date_cell and date_cell.has_attr('csk'):
-          game_date_str = date_cell['csk'][:8]
-          game_date_dt = datetime.strptime(game_date_str, '%Y%m%d')
-
-          if (start_date_dt and end_date_dt) and not (start_date_dt <= game_date_dt <= end_date_dt):
-            continue
-
-          box_score_cell = row.find('td', attrs={'data-stat': 'box_score_text'})
-          if box_score_cell and box_score_cell.find('a', href=True):
-            box_score_link = f"{BASE_URL}{box_score_cell.find('a')['href']}"
-            page_link_list.append(box_score_link)
-            page_date_list.append(game_date_dt.strftime('%Y-%m-%d'))
-
-      if page_link_list:
-        box_link_array.append(page_link_list)
-        all_dates.append(page_date_list)
-      time.sleep(random.uniform(0.5, 2))
-
-    except requests.exceptions.HTTPError:
-      handle_http_error(response)
-    except Exception as e:
-      handle_general_error(e, page)
-
-  return box_link_array, all_dates
+  return None, None
 
 
 # from https://medium.com/@HeeebsInc/using-machine-learning-to-predict-daily-fantasy-basketball-scores-part-i-811de3c54a98

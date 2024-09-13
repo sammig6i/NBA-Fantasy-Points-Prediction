@@ -14,15 +14,16 @@ def get_minio_client():
   with open(yaml_file, 'r') as file:
     config = yaml.safe_load(file)
 
-  minio_config = config['minio']
-  access_key = os.getenv(minio_config['access_key'])
-  secret_key = os.getenv(minio_config['secret_key'])
+  endpoint = os.getenv('MINIO_ENDPOINT')
+  access_key = os.getenv('MINIO_ROOT_USER')
+  secret_key = os.getenv('MINIO_ROOT_PASSWORD')
+  secure = os.getenv('MINIO_SECURE', 'false').lower() == 'true'
 
   return Minio(
-    minio_config['endpoint'],
+    endpoint=endpoint,
     access_key=access_key,
     secret_key=secret_key,
-    secure=minio_config['secure']
+    secure=secure
   )
 
 def upload_to_minio(df: pd.DataFrame, bucket_name: str, object_name: str) -> None:

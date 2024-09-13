@@ -1,0 +1,34 @@
+services:
+  data_ingestion:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ../../.env
+    environment:
+      - MINIO_ENDPOINT=${MINIO_ENDPOINT:-minio:9000}
+      - MINIO_BUCKET_NAME=${MINIO_BUCKET_NAME:-nba-raw-data}
+      - MINIO_SECURE=${MINIO_SECURE:-false}
+    volumes:
+      - ./config:/app/config
+    depends_on:
+      - minio
+
+  minio:
+    image: minio/minio:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    env_file:
+      - ../../.env
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+volumes:
+  minio_data:

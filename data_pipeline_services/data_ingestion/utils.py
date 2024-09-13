@@ -4,7 +4,7 @@ import unicodedata
 import os
 import time
 from datetime import datetime
-from .config.variables import MONTH_START_END_DATES
+from config.variables import MONTH_START_END_DATES
 
 
 def normalize_name(name):
@@ -28,7 +28,7 @@ def handle_http_error(response):
 
 def handle_general_error(error, link):
   """Handle general errors."""
-  print(f"Error occurred for {link}: {str(error)}")
+  print(f"Error occurred: {link}: {str(error)}")
 
 
 def apply_year_to_months(start_year_full: int, end_year_full: int) -> dict:
