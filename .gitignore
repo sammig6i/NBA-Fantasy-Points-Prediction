@@ -6,3 +6,4 @@ config/private.json
 **/.vscode/
 minio
 minio/
+.cursorignore
