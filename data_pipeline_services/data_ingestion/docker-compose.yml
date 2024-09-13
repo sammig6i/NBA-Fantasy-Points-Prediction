@@ -1,5 +1,6 @@
 services:
   data_ingestion:
+    image: ${DOCKER_REGISTRY:-us-west1-docker.pkg.dev/${PROJECT_ID:-nba-fantasy-ml}/nba-data-pipeline-repo}/data-ingestion:latest
     build:
       context: .
       dockerfile: Dockerfile

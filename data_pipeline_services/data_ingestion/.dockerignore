@@ -3,5 +3,4 @@ __pycache__
 *.pyo
 *.pyd
 .git
-.env
 .vscode
