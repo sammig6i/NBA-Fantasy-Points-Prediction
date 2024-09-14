@@ -1,6 +1,6 @@
 import pandas as pd
 import logging
-from data_pipeline_services.data_ingestion.config.variables import TEAM_ABBREVIATIONS
+from data_pipeline_services.config.variables import TEAM_ABBREVIATIONS
 
 def validate_cleaned_data(df: pd.DataFrame) -> bool:
   """

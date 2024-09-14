@@ -1,15 +1,12 @@
 import os
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-
 import pandas as pd
 import psycopg2
 import logging
 from dotenv import load_dotenv
 from psycopg2.extensions import connection
-from .validate import validate_cleaned_data
+from validate import validate_cleaned_data
 import hashlib
-from data_pipeline_services.data_ingestion.config.variables import TEAM_ABBREVIATIONS
+from data_pipeline_services.config.variables import TEAM_ABBREVIATIONS
 
 load_dotenv()
 logging.basicConfig(level=logging.ERROR)
@@ -267,8 +264,4 @@ def process_raw_data(file_path: str) -> None:
     connection.close()
     logging.info("Database connection closed.")
 
-
-if __name__ == "__main__":
-  file_path = os.path.join(os.path.dirname(__file__), '../data_ingestion/data/2021-22_Season.csv')
-  process_raw_data(file_path)
   

@@ -2,14 +2,14 @@
 
 from scraper import get_month_links, get_box_score_links, extract_player_data
 from utils import adjust_dates_based_on_season
-from storage import upload_to_minio
+from minio_operations import upload_to_minio, get_minio_client
 from datetime import datetime
 import yaml
 import os
+from datetime import datetime
 
-if __name__ == "__main__":
-  current_dir = os.path.dirname(os.path.abspath(__file__))
-  yaml_file = os.path.join(current_dir, 'config', 'scraping_config.yml')
+def main():
+  yaml_file = '/app/data_pipeline_services/config/scraping_config.yml'
 
   with open(yaml_file, 'r') as file:
     config = yaml.safe_load(file)
@@ -53,8 +53,12 @@ if __name__ == "__main__":
   object_name = f"{output_dir}/nba_player_stats_{season}_{start_date}_to_{end_date}_{current_timestamp}.csv"
 
   try:
-    upload_to_minio(df, bucket_name, object_name)
+    minio_client = get_minio_client()
+    upload_to_minio(minio_client, df, bucket_name, object_name)
     print(f"Data successfully uploaded to MinIO bucket '{bucket_name}' as '{object_name}'")
   except Exception as e:
-    print(f"Failed to upload data to MinIO: {str(e)}")
-  
+    print(f"Error uploading data to MinIO: {e}")
+    exit(1)
+
+if __name__ == "__main__":
+  main()

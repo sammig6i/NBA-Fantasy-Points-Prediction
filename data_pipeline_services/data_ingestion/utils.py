@@ -1,10 +1,9 @@
 import calendar
 from typing import List, Tuple
 import unicodedata
-import os
 import time
 from datetime import datetime
-from config.variables import MONTH_START_END_DATES
+from data_pipeline_services.config.variables import MONTH_START_END_DATES
 
 
 def normalize_name(name):

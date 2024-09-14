@@ -2,7 +2,7 @@ services:
   data_ingestion:
     image: ${DOCKER_REGISTRY:-us-west1-docker.pkg.dev/${PROJECT_ID:-nba-fantasy-ml}/nba-data-pipeline-repo}/data-ingestion:latest
     build:
-      context: .
+      context: ./data_ingestion
       dockerfile: Dockerfile
     env_file:
       - ../../.env
@@ -11,7 +11,8 @@ services:
       - MINIO_BUCKET_NAME=${MINIO_BUCKET_NAME:-nba-raw-data}
       - MINIO_SECURE=${MINIO_SECURE:-false}
     volumes:
-      - ./config:/app/config
+      - ../:/app/data_pipeline_services
+      - ../../config:/app/config
     depends_on:
       - minio
 
