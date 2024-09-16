@@ -60,5 +60,8 @@ def main():
     print(f"Error uploading data to MinIO: {e}")
     exit(1)
 
+  print("Data ingestion completed successfully")
+  exit(0)
+
 if __name__ == "__main__":
   main()

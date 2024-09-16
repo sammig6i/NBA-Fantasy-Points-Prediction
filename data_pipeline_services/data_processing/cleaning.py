@@ -7,6 +7,7 @@ from psycopg2.extensions import connection
 from validate import validate_cleaned_data
 import hashlib
 from data_pipeline_services.config.variables import TEAM_ABBREVIATIONS
+import numpy as np
 
 load_dotenv()
 logging.basicConfig(level=logging.ERROR)
@@ -28,24 +29,20 @@ def connect_db() -> connection | None:
 
 # Data Cleaning and Preprocessing
 def clean_numeric_columns(df: pd.DataFrame) -> pd.DataFrame:
-  """
-  Convert columns that should be numeric, coerce errors to NaN.
-  """
-  numeric_columns = ['FG', 'FGA', '3P', '3PA', 'FT', 'FTA', 'ORB', 'DRB', 'TRB', 'AST',
-                     'STL', 'BLK', 'TOV', 'PF', 'PTS', 'GmSc', '+-', 'FG%', '3P%', 'FT%']
-  for col in numeric_columns:
-    df[col] = pd.to_numeric(df[col], errors='coerce')
-  
-  return df
-
-
-def load_raw_data(file_path: str) -> pd.DataFrame:
-  """
-  Load raw csv file into pandas Dataframe.
-  """
-  df = pd.read_csv(file_path)
-  return df
-
+    """
+    Convert columns that should be numeric, coerce errors to NaN.
+    """
+    df = df.copy()
+    numeric_columns = ['FG', 'FGA', 'FG%', '3P', '3PA', '3P%', 'FT', 'FTA', 'FT%', 
+                       'ORB', 'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', '+-', 'GmSc']
+    
+    for col in numeric_columns:
+        df.loc[:, col] = pd.to_numeric(df[col].replace(['', '-', 'DNP'], np.nan), errors='coerce')
+    
+    percentage_columns = ['FG%', '3P%', 'FT%']
+    df.loc[:, percentage_columns] = df[percentage_columns].astype(float)
+    
+    return df
 
 def convert_team_names_to_abbreviations(df: pd.DataFrame) -> pd.DataFrame:
   """
@@ -60,19 +57,36 @@ def convert_team_names_to_abbreviations(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def remove_dnp_and_zero_minutes(df: pd.DataFrame) -> pd.DataFrame:
-  """
-  Remove rows where players either have 'DNP' in the stats or 0 minutes played (MP == '0:00').
-  """
-  df = df[~df['MP'].isin(['DNP', '0:00'])]
-  return df
+    """
+    Remove rows where players either have 'DNP', empty string, or '0:00' in the MP column.
+    """
+    df = df[~df['MP'].isin(['DNP', '', '0:00'])]
+    df = df[df['MP'].notna()]
+    return df
 
 
 def convert_mp_to_minutes(df: pd.DataFrame) -> pd.DataFrame:
-  """
-  Convert original MM:SS format in 'MP' column to total minutes as a float.
-  """
-  df['MP'] = df['MP'].apply(lambda x: sum(int(t) * 60**i for i, t in enumerate(reversed(x.split(':')))) / 60 if isinstance(x, str) else 0)
-  return df
+    """
+    Convert original MM:SS format in 'MP' column to total minutes as a float.
+    """
+    def to_minutes(x):
+        if pd.isna(x) or x == '' or x == 'DNP':
+            return np.nan
+        if isinstance(x, (int, float)):
+            return float(x)
+        try:
+            if ':' in str(x):
+                minutes, seconds = map(int, str(x).split(':'))
+                return float(minutes) + float(seconds) / 60
+            else:
+                return float(x)
+        except:
+            return np.nan
+
+    df = df.copy()
+    df['MP'] = df['MP'].apply(to_minutes)
+    df = df[df['MP'].notna()]
+    return df
 
 
 def remove_duplicates(df: pd.DataFrame) -> pd.DataFrame:
@@ -132,7 +146,7 @@ def assign_game_ids(df: pd.DataFrame, connection: connection) -> dict:
 
   cursor = connection.cursor()
   for index, game in games.iterrows():
-    game_date = pd.to_datetime(game['Date'], format='%Y%m%d', errors='raise').strftime('%Y-%m-%d')
+    game_date = game['Date']  # Assuming 'Date' is already in 'YYYY-MM-DD' format
     
     if game['Home'] == 1:
       home_team = game['Team']
@@ -165,7 +179,7 @@ def clean_and_prepare_player_stats(df: pd.DataFrame, player_id_map: dict, game_i
   cursor = connection.cursor()
 
   for index, row in df.iterrows():
-    game_date = pd.to_datetime(row['Date'], format='%Y%m%d').strftime('%Y-%m-%d')
+    game_date = row['Date']
     team = row['Team']
     opponent = row['Opponent']
     home_status = row['Home']
@@ -198,10 +212,14 @@ def clean_and_prepare_player_stats(df: pd.DataFrame, player_id_map: dict, game_i
 
 
 # Process Raw Data
-def process_raw_data(file_path: str) -> None:
+def process_raw_data(df: pd.DataFrame) -> None:
+  connection = None
   try:
     logging.info("Starting data processing...")
-
+    
+    # Create a copy of the DataFrame to avoid SettingWithCopyWarning
+    df = df.copy()
+    
     # DB connection
     connection = connect_db()
     if not connection:
@@ -210,15 +228,11 @@ def process_raw_data(file_path: str) -> None:
     
     logging.info("Database connected.")
     
-    # load raw data
-    logging.info("Loading raw data...")
-    raw_df = load_raw_data(file_path)
-    logging.info(f"Loaded raw data with shape: {raw_df.shape}")
-
-
     # Data cleaning, preprocessing, and validate
     logging.info("Cleaning and preprocessing data...")
-    df = remove_duplicates(raw_df)
+    breakpoint()
+    
+    df = remove_duplicates(df)
     df = convert_team_names_to_abbreviations(df)
     df = remove_dnp_and_zero_minutes(df)
     df = convert_mp_to_minutes(df)
@@ -236,11 +250,14 @@ def process_raw_data(file_path: str) -> None:
     # Insert cleaned player stats into database
     logging.info("Inserting player stats into database...")
     clean_and_prepare_player_stats(df, player_id_map, game_id_map, connection)
-    logging.info("Data processing completed sucessfully.")
+    logging.info("Data processing completed successfully.")
   except Exception as e:
     logging.error(f"Error processing raw data: {e}")
   finally:
-    connection.close()
-    logging.info("Database connection closed.")
+    if connection:
+      connection.close()
+      logging.info("Database connection closed.")
 
+    
+  
   

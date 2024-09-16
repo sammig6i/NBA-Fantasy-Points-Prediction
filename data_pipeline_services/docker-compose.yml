@@ -32,13 +32,14 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+      PYTHONUNBUFFERED: 1
     volumes:
       - ./:/app/data_pipeline_services
       - ../config:/app/config
     depends_on:
       data_ingestion:
         condition: service_completed_successfully
-    command: ["python", "-m", "debugpy", "--listen", "0.0.0.0:5678", "--wait-for-client", "-m", "main"]
+    command: ["python", "main.py"]
     ports:
       - "5678:5678"
 
