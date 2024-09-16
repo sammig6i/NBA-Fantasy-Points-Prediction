@@ -1,0 +1,62 @@
+x-common-env: &common-env
+  MINIO_ENDPOINT: ${MINIO_ENDPOINT:-minio:9000}
+  MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME:-nba-raw-data}
+  MINIO_SECURE: ${MINIO_SECURE:-false}
+  MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+  MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+
+services:
+  data_ingestion:
+    image: data-ingestion:latest
+    build:
+      context: ./data_ingestion
+      dockerfile: Dockerfile
+    environment:
+      <<: *common-env
+      PROJECT_ID: ${PROJECT_ID}
+    volumes:
+      - ./:/app/data_pipeline_services
+      - ../config:/app/config
+    depends_on:
+      - minio
+
+  data_processing:
+    image: data-processing:latest
+    build:
+      context: ./data_processing
+      dockerfile: Dockerfile
+    environment:
+      <<: *common-env
+      DB_HOST: host.docker.internal
+      DB_PORT: ${DB_PORT:-5432}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./:/app/data_pipeline_services
+      - ../config:/app/config
+    depends_on:
+      data_ingestion:
+        condition: service_completed_successfully
+    command: ["python", "-m", "debugpy", "--listen", "0.0.0.0:5678", "--wait-for-client", "-m", "main"]
+    ports:
+      - "5678:5678"
+
+  minio:
+    image: minio/minio:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      <<: *common-env
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+volumes:
+  minio_data:

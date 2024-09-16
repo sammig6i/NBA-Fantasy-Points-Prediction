@@ -197,23 +197,6 @@ def clean_and_prepare_player_stats(df: pd.DataFrame, player_id_map: dict, game_i
   connection.commit()
 
 
-# Clear Database
-def clear_database(connection: connection):
-  cursor = connection.cursor()
-
-  try:
-    cursor.execute("""
-                  TRUNCATE TABLE PlayerStats, Games, Players RESTART IDENTITY CASCADE;
-                  """)
-    connection.commit()
-    print("Database cleared.")
-  except Exception as e:
-    connection.rollback()
-    print(f"Error clearing the datbase: {e}")
-  finally:
-    cursor.close()
-
-
 # Process Raw Data
 def process_raw_data(file_path: str) -> None:
   try:
@@ -227,10 +210,6 @@ def process_raw_data(file_path: str) -> None:
     
     logging.info("Database connected.")
     
-    # clear database
-    logging.info("Clearing database...")
-    clear_database(connection)
-
     # load raw data
     logging.info("Loading raw data...")
     raw_df = load_raw_data(file_path)
