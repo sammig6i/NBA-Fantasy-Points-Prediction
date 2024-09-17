@@ -1,7 +1,7 @@
 import logging
 import os
-import time
 import sys
+import time
 
 import pandas as pd
 from cleaning import process_raw_data
@@ -12,7 +12,7 @@ pd.set_option("future.no_silent_downcasting", True)
 
 load_dotenv()
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', stream=sys.stdout)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s", stream=sys.stdout)
 logger = logging.getLogger(__name__)
 
 

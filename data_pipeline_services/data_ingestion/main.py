@@ -1,11 +1,16 @@
 # Entry point to core scraper for player box score stats
+import logging
 import os
+import sys
 from datetime import datetime
 
 import yaml
 from minio_operations import get_minio_client, upload_to_minio
 from scraper import extract_player_data, get_box_score_links, get_month_links
 from utils import adjust_dates_based_on_season
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s", stream=sys.stdout)
+logger = logging.getLogger(__name__)
 
 
 def main():
@@ -24,7 +29,7 @@ def main():
 
   result = get_month_links(season)
   if result is None:
-    print("Error getting month links. Exiting...")
+    logger.error("Error getting month links. Exiting...")
     exit(1)
 
   month_links, start_year, end_year = result
@@ -36,12 +41,12 @@ def main():
 
   box_score_links, all_dates = get_box_score_links(month_links, start_date, end_date, start_year, end_year)
   if box_score_links is None or all_dates is None:
-    print("Error getting box score links. Exiting...")
+    logger.error("Error getting box score links. Exiting...")
     exit(1)
 
   df = extract_player_data(box_score_links, all_dates)
   if df.empty:
-    print("No data extracted. DataFrame is empty. Exiting...")
+    logger.error("No data extracted. DataFrame is empty. Exiting...")
     exit(1)
 
   minio_config = config["minio"]
@@ -55,12 +60,12 @@ def main():
   try:
     minio_client = get_minio_client()
     upload_to_minio(minio_client, df, bucket_name, object_name)
-    print(f"Data successfully uploaded to MinIO bucket '{bucket_name}' as '{object_name}'")
+    logger.info(f"Data successfully uploaded to MinIO bucket '{bucket_name}' as '{object_name}'")
   except Exception as e:
-    print(f"Error uploading data to MinIO: {e}")
+    logger.error(f"Error uploading data to MinIO: {e}")
     exit(1)
 
-  print("Data ingestion completed successfully")
+  logger.info("Data ingestion completed successfully")
   with open("/tmp/data_ingestion_complete", "w") as f:
     f.write("Data ingestion completed successfully")
 

@@ -12,10 +12,7 @@ x-common-env: &common-env
 
 services:
   data_ingestion:
-    image: data-ingestion:latest
-    build:
-      context: ./data_ingestion
-      dockerfile: Dockerfile
+    image: ${DOCKER_REGISTRY}/data-ingestion:latest
     environment:
       <<: *common-env
     volumes:
@@ -29,10 +26,7 @@ services:
         condition: service_healthy
 
   data_processing:
-    image: data-processing:latest
-    build:
-      context: ./data_processing
-      dockerfile: Dockerfile
+    image: ${DOCKER_REGISTRY}/data-processing:latest
     environment:
       <<: *common-env
     volumes:
