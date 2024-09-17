@@ -1,6 +1,7 @@
 import hashlib
 import logging
 import os
+import sys
 
 import numpy as np
 import pandas as pd
@@ -12,7 +13,7 @@ from validate import validate_cleaned_data
 from data_pipeline_services.config.variables import TEAM_ABBREVIATIONS
 
 load_dotenv()
-logging.basicConfig(level=logging.ERROR)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', stream=sys.stdout)
 
 
 def connect_db() -> connection | None:
