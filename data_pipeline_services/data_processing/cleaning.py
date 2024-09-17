@@ -144,11 +144,11 @@ def assign_player_ids(df: pd.DataFrame, connection: connection) -> dict:
   for player_name in players:
     cursor.execute(
       """
-                   INSERT INTO Players (player_name)
-                   VALUES (%s)
-                   ON CONFLICT (player_name) DO NOTHING
-                   RETURNING player_id;
-                   """,
+      INSERT INTO Players (player_name)
+      VALUES (%s)
+      ON CONFLICT (player_name) DO NOTHING
+      RETURNING player_id;
+      """,
       (player_name,),
     )
     result = cursor.fetchone()
@@ -157,9 +157,9 @@ def assign_player_ids(df: pd.DataFrame, connection: connection) -> dict:
     else:
       cursor.execute(
         """
-                     SELECT player_id FROM Players 
-                     WHERE player_name = %s;
-                     """,
+        SELECT player_id FROM Players 
+        WHERE player_name = %s;
+        """,
         (player_name,),
       )
       player_id_map[player_name] = cursor.fetchone()[0]
@@ -177,25 +177,25 @@ def assign_game_ids(df: pd.DataFrame, connection: connection) -> dict:
 
   cursor = connection.cursor()
   for game in games.itertuples():
-    game_date = game["Date"]
+    game_date = game.Date
 
-    if game["Home"] == 1:
-      home_team = game["Team"]
-      away_team = game["Opponent"]
+    if game.Home == 1:
+      home_team = game.Team
+      away_team = game.Opponent
     else:
-      home_team = game["Opponent"]
-      away_team = game["Team"]
+      home_team = game.Opponent
+      away_team = game.Team
 
-    game_link = game["GameLink"]
+    game_link = game.GameLink
     game_id = generate_game_id(game_date, home_team, away_team)
 
     cursor.execute(
       """
-                  INSERT INTO Games (game_id, game_date, home_team, away_team, game_link) 
-                  VALUES (%s, %s, %s, %s, %s) 
-                  ON CONFLICT (game_link) DO NOTHING 
-                  RETURNING game_id;
-                  """,
+      INSERT INTO Games (game_id, game_date, home_team, away_team, game_link) 
+      VALUES (%s, %s, %s, %s, %s) 
+      ON CONFLICT (game_link) DO NOTHING 
+      RETURNING game_id;
+      """,
       (game_id, game_date, home_team, away_team, game_link),
     )
 
@@ -214,7 +214,7 @@ def clean_and_prepare_player_stats(
   """
   cursor = connection.cursor()
 
-  for index, row in df.iterrows():
+  for row in df.to_dict("records"):
     game_date = row["Date"]
     team = row["Team"]
     opponent = row["Opponent"]
@@ -233,12 +233,12 @@ def clean_and_prepare_player_stats(
     if player_id and game_id:
       cursor.execute(
         """
-          INSERT INTO PlayerStats (
-              game_id, player_id, team, opponent, mp, fg, fga, fg_percent, three_p, three_pa, 
-              three_p_percent, ft, fta, ft_percent, orb, drb, trb, ast, stl, blk, 
-              tov, pf, pts, gmsc, plus_minus
-          ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
-      """,
+        INSERT INTO PlayerStats (
+        game_id, player_id, team, opponent, mp, fg, fga, fg_percent, three_p, three_pa, 
+        three_p_percent, ft, fta, ft_percent, orb, drb, trb, ast, stl, blk, 
+        tov, pf, pts, gmsc, plus_minus
+        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+        """,
         (
           game_id,
           player_id,
