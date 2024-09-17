@@ -1,16 +1,19 @@
+import hashlib
+import logging
 import os
+
+import numpy as np
 import pandas as pd
 import psycopg2
-import logging
 from dotenv import load_dotenv
 from psycopg2.extensions import connection
 from validate import validate_cleaned_data
-import hashlib
+
 from data_pipeline_services.config.variables import TEAM_ABBREVIATIONS
-import numpy as np
 
 load_dotenv()
 logging.basicConfig(level=logging.ERROR)
+
 
 def connect_db() -> connection | None:
   try:
@@ -19,30 +22,51 @@ def connect_db() -> connection | None:
       password=os.getenv("DB_PASSWORD"),
       host=os.getenv("DB_HOST"),
       port=os.getenv("DB_PORT"),
-      database=os.getenv("DB_NAME")
+      database=os.getenv("DB_NAME"),
     )
     return connection
   except Exception as err:
     logging.error(f"Error while connecting to PostgreSQL: {err}")
     return None
-  
+
 
 # Data Cleaning and Preprocessing
 def clean_numeric_columns(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Convert columns that should be numeric, coerce errors to NaN.
-    """
-    df = df.copy()
-    numeric_columns = ['FG', 'FGA', 'FG%', '3P', '3PA', '3P%', 'FT', 'FTA', 'FT%', 
-                       'ORB', 'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', '+-', 'GmSc']
-    
-    for col in numeric_columns:
-        df.loc[:, col] = pd.to_numeric(df[col].replace(['', '-', 'DNP'], np.nan), errors='coerce')
-    
-    percentage_columns = ['FG%', '3P%', 'FT%']
-    df.loc[:, percentage_columns] = df[percentage_columns].astype(float)
-    
-    return df
+  """
+  Convert columns that should be numeric, coerce errors to NaN.
+  """
+  df = df.copy()
+  numeric_columns = [
+    "FG",
+    "FGA",
+    "FG%",
+    "3P",
+    "3PA",
+    "3P%",
+    "FT",
+    "FTA",
+    "FT%",
+    "ORB",
+    "DRB",
+    "TRB",
+    "AST",
+    "STL",
+    "BLK",
+    "TOV",
+    "PF",
+    "PTS",
+    "+-",
+    "GmSc",
+  ]
+
+  for col in numeric_columns:
+    df.loc[:, col] = pd.to_numeric(df[col].replace(["", "-", "DNP"], np.nan), errors="coerce")
+
+  percentage_columns = ["FG%", "3P%", "FT%"]
+  df.loc[:, percentage_columns] = df[percentage_columns].astype(float)
+
+  return df
+
 
 def convert_team_names_to_abbreviations(df: pd.DataFrame) -> pd.DataFrame:
   """
@@ -50,50 +74,51 @@ def convert_team_names_to_abbreviations(df: pd.DataFrame) -> pd.DataFrame:
   """
   TEAM_ABBREVIATIONS_REVERSED = {v: k for k, v in TEAM_ABBREVIATIONS.items()}
 
-  df['Team'] = df['Team'].map(TEAM_ABBREVIATIONS_REVERSED)
-  df['Opponent'] = df['Opponent'].map(TEAM_ABBREVIATIONS_REVERSED)
-  
+  df["Team"] = df["Team"].map(TEAM_ABBREVIATIONS_REVERSED)
+  df["Opponent"] = df["Opponent"].map(TEAM_ABBREVIATIONS_REVERSED)
+
   return df
 
 
 def remove_dnp_and_zero_minutes(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Remove rows where players either have 'DNP', empty string, or '0:00' in the MP column.
-    """
-    df = df[~df['MP'].isin(['DNP', '', '0:00'])]
-    df = df[df['MP'].notna()]
-    return df
+  """
+  Remove rows where players either have 'DNP', empty string, or '0:00' in the MP column.
+  """
+  df = df[~df["MP"].isin(["DNP", "", "0:00"])]
+  df = df[df["MP"].notna()]
+  return df
 
 
 def convert_mp_to_minutes(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Convert original MM:SS format in 'MP' column to total minutes as a float.
-    """
-    def to_minutes(x):
-        if pd.isna(x) or x == '' or x == 'DNP':
-            return np.nan
-        if isinstance(x, (int, float)):
-            return float(x)
-        try:
-            if ':' in str(x):
-                minutes, seconds = map(int, str(x).split(':'))
-                return float(minutes) + float(seconds) / 60
-            else:
-                return float(x)
-        except:
-            return np.nan
+  """
+  Convert original MM:SS format in 'MP' column to total minutes as a float.
+  """
 
-    df = df.copy()
-    df['MP'] = df['MP'].apply(to_minutes)
-    df = df[df['MP'].notna()]
-    return df
+  def to_minutes(x):
+    if pd.isna(x) or x == "" or x == "DNP":
+      return np.nan
+    if isinstance(x, (int, float)):
+      return float(x)
+    try:
+      if ":" in str(x):
+        (minutes, seconds) = map(int, str(x).split(":"))
+        return float(minutes) + float(seconds) / 60
+      else:
+        return float(x)
+    except ValueError:
+      return np.nan
+
+  df = df.copy()
+  df["MP"] = df["MP"].apply(to_minutes)
+  df = df[df["MP"].notna()]
+  return df
 
 
 def remove_duplicates(df: pd.DataFrame) -> pd.DataFrame:
   """
   Remove duplicates from the dataset based on key columns.
   """
-  df_cleaned = df.drop_duplicates(subset=['Date', 'Team', 'Opponent', 'Name'])
+  df_cleaned = df.drop_duplicates(subset=["Date", "Team", "Opponent", "Name"])
   return df_cleaned
 
 
@@ -105,32 +130,38 @@ def generate_game_id(game_date: str, team: str, opponent: str) -> str:
   game_key = f"{game_date}_{team}_{opponent}"
   game_id = hashlib.md5(game_key.encode()).hexdigest()
   return game_id
-  
+
 
 def assign_player_ids(df: pd.DataFrame, connection: connection) -> dict:
   """
   Assign unique player IDs to each player in the dataset and populate the Players table.
   """
-  players = df['Name'].drop_duplicates()
+  players = df["Name"].drop_duplicates()
   player_id_map = {}
 
   cursor = connection.cursor()
 
   for player_name in players:
-    cursor.execute("""
+    cursor.execute(
+      """
                    INSERT INTO Players (player_name)
                    VALUES (%s)
                    ON CONFLICT (player_name) DO NOTHING
                    RETURNING player_id;
-                   """, (player_name,))
+                   """,
+      (player_name,),
+    )
     result = cursor.fetchone()
     if result:
       player_id_map[player_name] = result[0]
     else:
-      cursor.execute("""
+      cursor.execute(
+        """
                      SELECT player_id FROM Players 
                      WHERE player_name = %s;
-                     """, (player_name,))
+                     """,
+        (player_name,),
+      )
       player_id_map[player_name] = cursor.fetchone()[0]
 
   connection.commit()
@@ -141,30 +172,33 @@ def assign_game_ids(df: pd.DataFrame, connection: connection) -> dict:
   """
   Assign unique game IDs to each game and populate the Games table.
   """
-  games = df[['Date', 'Team', 'Opponent', 'Home','GameLink']].drop_duplicates()
+  games = df[["Date", "Team", "Opponent", "Home", "GameLink"]].drop_duplicates()
   game_id_map = {}
 
   cursor = connection.cursor()
-  for index, game in games.iterrows():
-    game_date = game['Date']  # Assuming 'Date' is already in 'YYYY-MM-DD' format
-    
-    if game['Home'] == 1:
-      home_team = game['Team']
-      away_team = game['Opponent']
+  for game in games.itertuples():
+    game_date = game["Date"]
+
+    if game["Home"] == 1:
+      home_team = game["Team"]
+      away_team = game["Opponent"]
     else:
-      home_team = game['Opponent']
-      away_team = game['Team']
-    
-    game_link = game['GameLink']
+      home_team = game["Opponent"]
+      away_team = game["Team"]
+
+    game_link = game["GameLink"]
     game_id = generate_game_id(game_date, home_team, away_team)
 
-    cursor.execute("""
+    cursor.execute(
+      """
                   INSERT INTO Games (game_id, game_date, home_team, away_team, game_link) 
                   VALUES (%s, %s, %s, %s, %s) 
                   ON CONFLICT (game_link) DO NOTHING 
                   RETURNING game_id;
-                  """, (game_id, game_date, home_team, away_team, game_link))
-    
+                  """,
+      (game_id, game_date, home_team, away_team, game_link),
+    )
+
     game_id_map[(game_date, home_team, away_team)] = game_id
 
   connection.commit()
@@ -172,17 +206,19 @@ def assign_game_ids(df: pd.DataFrame, connection: connection) -> dict:
 
 
 # Prepare Player Stats
-def clean_and_prepare_player_stats(df: pd.DataFrame, player_id_map: dict, game_id_map: dict, connection: connection) -> None:
+def clean_and_prepare_player_stats(
+  df: pd.DataFrame, player_id_map: dict, game_id_map: dict, connection: connection
+) -> None:
   """
   Insert the cleaned player stats into the PlayerStats table in the database.
   """
   cursor = connection.cursor()
 
   for index, row in df.iterrows():
-    game_date = row['Date']
-    team = row['Team']
-    opponent = row['Opponent']
-    home_status = row['Home']
+    game_date = row["Date"]
+    team = row["Team"]
+    opponent = row["Opponent"]
+    home_status = row["Home"]
 
     if home_status == 1:
       home_team = team
@@ -191,22 +227,46 @@ def clean_and_prepare_player_stats(df: pd.DataFrame, player_id_map: dict, game_i
       home_team = opponent
       away_team = team
 
-    player_id = player_id_map.get(row['Name'])
+    player_id = player_id_map.get(row["Name"])
     game_id = game_id_map.get((game_date, home_team, away_team))
 
     if player_id and game_id:
-      cursor.execute("""
+      cursor.execute(
+        """
           INSERT INTO PlayerStats (
               game_id, player_id, team, opponent, mp, fg, fga, fg_percent, three_p, three_pa, 
               three_p_percent, ft, fta, ft_percent, orb, drb, trb, ast, stl, blk, 
               tov, pf, pts, gmsc, plus_minus
           ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
-      """, (
-          game_id, player_id, row['Team'], row['Opponent'], row['MP'], row['FG'], row['FGA'], row['FG%'], 
-          row['3P'], row['3PA'], row['3P%'], row['FT'], row['FTA'], row['FT%'], row['ORB'], row['DRB'], 
-          row['TRB'], row['AST'], row['STL'], row['BLK'], row['TOV'], row['PF'], row['PTS'], row['GmSc'], 
-          row['+-']
-      ))
+      """,
+        (
+          game_id,
+          player_id,
+          row["Team"],
+          row["Opponent"],
+          row["MP"],
+          row["FG"],
+          row["FGA"],
+          row["FG%"],
+          row["3P"],
+          row["3PA"],
+          row["3P%"],
+          row["FT"],
+          row["FTA"],
+          row["FT%"],
+          row["ORB"],
+          row["DRB"],
+          row["TRB"],
+          row["AST"],
+          row["STL"],
+          row["BLK"],
+          row["TOV"],
+          row["PF"],
+          row["PTS"],
+          row["GmSc"],
+          row["+-"],
+        ),
+      )
 
   connection.commit()
 
@@ -216,22 +276,20 @@ def process_raw_data(df: pd.DataFrame) -> None:
   connection = None
   try:
     logging.info("Starting data processing...")
-    
-    # Create a copy of the DataFrame to avoid SettingWithCopyWarning
+
     df = df.copy()
-    
+
     # DB connection
     connection = connect_db()
     if not connection:
       print("Database connection failed.")
       return
-    
+
     logging.info("Database connected.")
-    
+
     # Data cleaning, preprocessing, and validate
     logging.info("Cleaning and preprocessing data...")
-    breakpoint()
-    
+
     df = remove_duplicates(df)
     df = convert_team_names_to_abbreviations(df)
     df = remove_dnp_and_zero_minutes(df)
@@ -257,7 +315,3 @@ def process_raw_data(df: pd.DataFrame) -> None:
     if connection:
       connection.close()
       logging.info("Database connection closed.")
-
-    
-  
-  
