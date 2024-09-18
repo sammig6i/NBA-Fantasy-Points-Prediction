@@ -38,6 +38,8 @@ services:
         condition: service_completed_successfully
       postgres:
         condition: service_healthy
+      minio:
+        condition: service_healthy
 
   minio:
     image: minio/minio:latest
@@ -45,7 +47,8 @@ services:
       - "9000:9000"
       - "9001:9001"
     environment:
-      <<: *common-env
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
     volumes:
       - minio_data:/data
     command: server /data --console-address ":9001"
