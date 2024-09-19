@@ -1,11 +1,12 @@
 FROM python:3.10-slim
 
-WORKDIR /app
+WORKDIR /app/data_pipeline_services
 
-COPY requirements.txt .
+COPY data_ingestion/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
-ENV PYTHONPATH=/app:/app/data_pipeline_services
 
-CMD ["python", "main.py"]
+ENV PYTHONPATH=/app
+
+CMD ["python", "data_ingestion/main.py"]

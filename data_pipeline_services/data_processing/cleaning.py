@@ -8,12 +8,12 @@ import pandas as pd
 import psycopg2
 from dotenv import load_dotenv
 from psycopg2.extensions import connection
-from validate import validate_cleaned_data
 
 from data_pipeline_services.config.variables import TEAM_ABBREVIATIONS
+from data_pipeline_services.data_processing.validate import validate_cleaned_data
 
 load_dotenv()
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', stream=sys.stdout)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s", stream=sys.stdout)
 
 
 def connect_db() -> connection | None:
@@ -273,7 +273,7 @@ def clean_and_prepare_player_stats(
 
 
 # Process Raw Data
-def process_raw_data(df: pd.DataFrame) -> None:
+def process_raw_data(df: pd.DataFrame) -> bool:
   connection = None
   try:
     logging.info("Starting data processing...")
@@ -283,8 +283,8 @@ def process_raw_data(df: pd.DataFrame) -> None:
     # DB connection
     connection = connect_db()
     if not connection:
-      print("Database connection failed.")
-      return
+      logging.error("Database connection failed.")
+      return False
 
     logging.info("Database connected.")
 
@@ -299,7 +299,7 @@ def process_raw_data(df: pd.DataFrame) -> None:
 
     if not validate_cleaned_data(df):
       logging.error("Data validation failed.")
-      return
+      return False
 
     # assign unique IDs for players and games
     logging.info("Assigning unique IDs for players and games...")
@@ -310,8 +310,10 @@ def process_raw_data(df: pd.DataFrame) -> None:
     logging.info("Inserting player stats into database...")
     clean_and_prepare_player_stats(df, player_id_map, game_id_map, connection)
     logging.info("Data processing completed successfully.")
+    return True
   except Exception as e:
     logging.error(f"Error processing raw data: {e}")
+    return False
   finally:
     if connection:
       connection.close()

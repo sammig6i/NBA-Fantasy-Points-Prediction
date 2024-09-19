@@ -1,0 +1,22 @@
+[2024-09-19T05:33:11.226+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2024-09-19T05:33:11.252+0000] {taskinstance.py:2612} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: nba_data_pipeline.run_data_processing manual__2024-09-19T05:31:47.286882+00:00 [queued]>
+[2024-09-19T05:33:11.266+0000] {taskinstance.py:2612} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: nba_data_pipeline.run_data_processing manual__2024-09-19T05:31:47.286882+00:00 [queued]>
+[2024-09-19T05:33:11.267+0000] {taskinstance.py:2865} INFO - Starting attempt 1 of 2
+[2024-09-19T05:33:11.283+0000] {taskinstance.py:2888} INFO - Executing <Task(_PythonDecoratedOperator): run_data_processing> on 2024-09-19 05:31:47.286882+00:00
+[2024-09-19T05:33:11.295+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'nba_data_pipeline', 'run_data_processing', 'manual__2024-09-19T05:31:47.286882+00:00', '--job-id', '4', '--raw', '--subdir', 'DAGS_FOLDER/nba_data_pipeline.py', '--cfg-path', '/tmp/tmp7t3yxnf5']
+[2024-09-19T05:33:11.298+0000] {standard_task_runner.py:105} INFO - Job 4: Subtask run_data_processing
+[2024-09-19T05:33:11.301+0000] {logging_mixin.py:190} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=221) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2024-09-19T05:33:11.302+0000] {standard_task_runner.py:72} INFO - Started process 222 to run task
+[2024-09-19T05:33:11.365+0000] {task_command.py:467} INFO - Running <TaskInstance: nba_data_pipeline.run_data_processing manual__2024-09-19T05:31:47.286882+00:00 [running]> on host c3e696a8f912
+[2024-09-19T05:33:11.481+0000] {taskinstance.py:3131} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='nba_data_pipeline' AIRFLOW_CTX_TASK_ID='run_data_processing' AIRFLOW_CTX_EXECUTION_DATE='2024-09-19T05:31:47.286882+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-09-19T05:31:47.286882+00:00'
+[2024-09-19T05:33:11.482+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2024-09-19T05:33:11.487+0000] {baseoperator.py:405} WARNING - DockerOperator.execute cannot be called outside TaskInstance!
+[2024-09-19T05:33:11.535+0000] {docker.py:367} INFO - Starting docker container from image us-west1-docker.pkg.dev/nba-fantasy-ml/nba-data-pipeline-repo/data-processing:latest
+[2024-09-19T05:33:11.546+0000] {docker.py:375} WARNING - Using remote engine or docker-in-docker and mounting temporary volume from host is not supported. Falling back to `mount_tmp_dir=False` mode. You can set `mount_tmp_dir` parameter to False to disable mounting and remove the warning
+[2024-09-19T05:33:12.635+0000] {docker.py:438} INFO - 2024-09-19 05:33:12,634 - ERROR - An error occurred during data processing: expected string or bytes-like object
+[2024-09-19T05:33:12.848+0000] {python.py:240} INFO - Done. Returned value was: 2024-09-19 05:33:12,634 - ERROR - An error occurred during data processing: expected string or bytes-like object
+[2024-09-19T05:33:12.882+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2024-09-19T05:33:12.884+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=nba_data_pipeline, task_id=run_data_processing, run_id=manual__2024-09-19T05:31:47.286882+00:00, execution_date=20240919T053147, start_date=20240919T053311, end_date=20240919T053312
+[2024-09-19T05:33:12.929+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2024-09-19T05:33:12.972+0000] {taskinstance.py:3900} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-09-19T05:33:12.974+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

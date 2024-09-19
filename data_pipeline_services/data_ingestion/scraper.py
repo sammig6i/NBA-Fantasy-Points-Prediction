@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import time
 import pandas as pd
 import random
-from utils import (
+from data_pipeline_services.data_ingestion.utils import (
   normalize_name, 
   handle_http_error, 
   handle_general_error,

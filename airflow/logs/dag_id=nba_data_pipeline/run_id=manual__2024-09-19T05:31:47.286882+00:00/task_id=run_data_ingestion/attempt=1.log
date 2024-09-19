@@ -1,0 +1,60 @@
+[2024-09-19T05:31:48.313+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2024-09-19T05:31:48.334+0000] {taskinstance.py:2612} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: nba_data_pipeline.run_data_ingestion manual__2024-09-19T05:31:47.286882+00:00 [queued]>
+[2024-09-19T05:31:48.345+0000] {taskinstance.py:2612} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: nba_data_pipeline.run_data_ingestion manual__2024-09-19T05:31:47.286882+00:00 [queued]>
+[2024-09-19T05:31:48.346+0000] {taskinstance.py:2865} INFO - Starting attempt 1 of 2
+[2024-09-19T05:31:48.365+0000] {taskinstance.py:2888} INFO - Executing <Task(_PythonDecoratedOperator): run_data_ingestion> on 2024-09-19 05:31:47.286882+00:00
+[2024-09-19T05:31:48.373+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'nba_data_pipeline', 'run_data_ingestion', 'manual__2024-09-19T05:31:47.286882+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/nba_data_pipeline.py', '--cfg-path', '/tmp/tmpdpkhojcz']
+[2024-09-19T05:31:48.376+0000] {standard_task_runner.py:105} INFO - Job 3: Subtask run_data_ingestion
+[2024-09-19T05:31:48.378+0000] {logging_mixin.py:190} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=201) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2024-09-19T05:31:48.379+0000] {standard_task_runner.py:72} INFO - Started process 203 to run task
+[2024-09-19T05:31:48.432+0000] {task_command.py:467} INFO - Running <TaskInstance: nba_data_pipeline.run_data_ingestion manual__2024-09-19T05:31:47.286882+00:00 [running]> on host c3e696a8f912
+[2024-09-19T05:31:48.557+0000] {taskinstance.py:3131} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='nba_data_pipeline' AIRFLOW_CTX_TASK_ID='run_data_ingestion' AIRFLOW_CTX_EXECUTION_DATE='2024-09-19T05:31:47.286882+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-09-19T05:31:47.286882+00:00'
+[2024-09-19T05:31:48.559+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2024-09-19T05:31:48.582+0000] {baseoperator.py:405} WARNING - DockerOperator.execute cannot be called outside TaskInstance!
+[2024-09-19T05:31:48.636+0000] {docker.py:367} INFO - Starting docker container from image us-west1-docker.pkg.dev/nba-fantasy-ml/nba-data-pipeline-repo/data-ingestion:latest
+[2024-09-19T05:31:48.666+0000] {docker.py:375} WARNING - Using remote engine or docker-in-docker and mounting temporary volume from host is not supported. Falling back to `mount_tmp_dir=False` mode. You can set `mount_tmp_dir` parameter to False to disable mounting and remove the warning
+[2024-09-19T05:33:09.857+0000] {docker.py:438} INFO - Processing batch 1/1
+[2024-09-19T05:33:09.858+0000] {docker.py:438} INFO - Scraping box score: https://www.basketball-reference.com/boxscores/202310240DEN.html for game date 2023-10-24
+[2024-09-19T05:33:09.859+0000] {docker.py:438} INFO - Scraping box score: https://www.basketball-reference.com/boxscores/202310240GSW.html for game date 2023-10-24
+[2024-09-19T05:33:09.859+0000] {docker.py:438} INFO - Scraping box score: https://www.basketball-reference.com/boxscores/202310250ORL.html for game date 2023-10-25
+[2024-09-19T05:33:09.859+0000] {docker.py:438} INFO - Scraping box score: https://www.basketball-reference.com/boxscores/202310250NYK.html for game date 2023-10-25
+[2024-09-19T05:33:09.860+0000] {docker.py:438} INFO - Scraping box score: https://www.basketball-reference.com/boxscores/202310250IND.html for game date 2023-10-25
+[2024-09-19T05:33:09.860+0000] {docker.py:438} INFO - Scraping box score: https://www.basketball-reference.com/boxscores/202310250CHO.html for game date 2023-10-25
+[2024-09-19T05:33:09.861+0000] {docker.py:438} INFO - Scraping box score: https://www.basketball-reference.com/boxscores/202310250MIA.html for game date 2023-10-25
+[2024-09-19T05:33:09.861+0000] {docker.py:438} INFO - Scraping box score: https://www.basketball-reference.com/boxscores/202310250TOR.html for game date 2023-10-25
+[2024-09-19T05:33:09.862+0000] {docker.py:438} INFO - Scraping box score: https://www.basketball-reference.com/boxscores/202310250BRK.html for game date 2023-10-25
+[2024-09-19T05:33:09.862+0000] {docker.py:438} INFO - Scraping box score: https://www.basketball-reference.com/boxscores/202310250MEM.html for game date 2023-10-25
+[2024-09-19T05:33:09.863+0000] {docker.py:438} INFO - Skipping incomplete data for ja morant
+[2024-09-19T05:33:09.863+0000] {docker.py:438} INFO - Scraping box score: https://www.basketball-reference.com/boxscores/202310250CHI.html for game date 2023-10-25
+[2024-09-19T05:33:09.864+0000] {docker.py:438} INFO - Scraping box score: https://www.basketball-reference.com/boxscores/202310250UTA.html for game date 2023-10-25
+[2024-09-19T05:33:09.864+0000] {docker.py:438} INFO - Scraping box score: https://www.basketball-reference.com/boxscores/202310250SAS.html for game date 2023-10-25
+[2024-09-19T05:33:09.864+0000] {docker.py:438} INFO - Skipping incomplete data for devonte' graham
+[2024-09-19T05:33:09.865+0000] {docker.py:438} INFO - Scraping box score: https://www.basketball-reference.com/boxscores/202310250LAC.html for game date 2023-10-25
+[2024-09-19T05:33:09.865+0000] {docker.py:438} INFO - Failed to upload player_box_scores/2023-24/nba_player_stats_2023-24_2023-10-24_to_2023-10-25_2024-09-19_05-33-09.csv: expected string or bytes-like object
+[2024-09-19T05:33:09.866+0000] {docker.py:438} INFO - 2024-09-19 05:33:09,856 - INFO - Data successfully uploaded to MinIO bucket 'None' as 'player_box_scores/2023-24/nba_player_stats_2023-24_2023-10-24_to_2023-10-25_2024-09-19_05-33-09.csv'
+[2024-09-19T05:33:09.866+0000] {docker.py:438} INFO - 2024-09-19 05:33:09,856 - INFO - Data ingestion completed successfully
+[2024-09-19T05:33:10.205+0000] {python.py:240} INFO - Done. Returned value was: Processing batch 1/1
+Scraping box score: https://www.basketball-reference.com/boxscores/202310240DEN.html for game date 2023-10-24
+Scraping box score: https://www.basketball-reference.com/boxscores/202310240GSW.html for game date 2023-10-24
+Scraping box score: https://www.basketball-reference.com/boxscores/202310250ORL.html for game date 2023-10-25
+Scraping box score: https://www.basketball-reference.com/boxscores/202310250NYK.html for game date 2023-10-25
+Scraping box score: https://www.basketball-reference.com/boxscores/202310250IND.html for game date 2023-10-25
+Scraping box score: https://www.basketball-reference.com/boxscores/202310250CHO.html for game date 2023-10-25
+Scraping box score: https://www.basketball-reference.com/boxscores/202310250MIA.html for game date 2023-10-25
+Scraping box score: https://www.basketball-reference.com/boxscores/202310250TOR.html for game date 2023-10-25
+Scraping box score: https://www.basketball-reference.com/boxscores/202310250BRK.html for game date 2023-10-25
+Scraping box score: https://www.basketball-reference.com/boxscores/202310250MEM.html for game date 2023-10-25
+Skipping incomplete data for ja morant
+Scraping box score: https://www.basketball-reference.com/boxscores/202310250CHI.html for game date 2023-10-25
+Scraping box score: https://www.basketball-reference.com/boxscores/202310250UTA.html for game date 2023-10-25
+Scraping box score: https://www.basketball-reference.com/boxscores/202310250SAS.html for game date 2023-10-25
+Skipping incomplete data for devonte' graham
+Scraping box score: https://www.basketball-reference.com/boxscores/202310250LAC.html for game date 2023-10-25
+Failed to upload player_box_scores/2023-24/nba_player_stats_2023-24_2023-10-24_to_2023-10-25_2024-09-19_05-33-09.csv: expected string or bytes-like object
+2024-09-19 05:33:09,856 - INFO - Data successfully uploaded to MinIO bucket 'None' as 'player_box_scores/2023-24/nba_player_stats_2023-24_2023-10-24_to_2023-10-25_2024-09-19_05-33-09.csv'
+2024-09-19 05:33:09,856 - INFO - Data ingestion completed successfully
+[2024-09-19T05:33:10.253+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2024-09-19T05:33:10.254+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=nba_data_pipeline, task_id=run_data_ingestion, run_id=manual__2024-09-19T05:31:47.286882+00:00, execution_date=20240919T053147, start_date=20240919T053148, end_date=20240919T053310
+[2024-09-19T05:33:10.315+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2024-09-19T05:33:10.354+0000] {taskinstance.py:3900} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2024-09-19T05:33:10.356+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
