@@ -106,17 +106,16 @@ services:
     environment:
       <<: *common-env
     volumes:
-      - ../:/opt/airflow
-      - ./:/opt/airflow/data_pipeline_services
+      - ../airflow:/opt/airflow
       - ../airflow/dags:/opt/airflow/dags
       - ../airflow/logs:/opt/airflow/logs
       - ../airflow/plugins:/opt/airflow/plugins
-      - ../airflow/requirements.txt:/requirements.txt
+      - ../airflow/requirements.txt:/opt/airflow/requirements.txt:ro
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "8080:8080"
     command: >
-      bash -c "pip install -r /requirements.txt && airflow webserver"
+      bash -c "pip install -r /opt/airflow/requirements.txt && airflow webserver"
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
       interval: 10s
@@ -140,15 +139,14 @@ services:
     environment:
       <<: *common-env
     volumes:
-      - ../:/opt/airflow
-      - ./:/opt/airflow/data_pipeline_services
+      - ../airflow:/opt/airflow
       - ../airflow/dags:/opt/airflow/dags
       - ../airflow/logs:/opt/airflow/logs
       - ../airflow/plugins:/opt/airflow/plugins
-      - ../airflow/requirements.txt:/requirements.txt
+      - ../airflow/requirements.txt:/opt/airflow/requirements.txt:ro
       - /var/run/docker.sock:/var/run/docker.sock
     command: >
-      bash -c "pip install -r /requirements.txt && airflow scheduler"
+      bash -c "pip install -r /opt/airflow/requirements.txt && airflow scheduler"
     user: "${AIRFLOW_UID:-50000}:0"
     networks:
       - nba_network
@@ -161,12 +159,15 @@ services:
     environment:
       <<: *common-env
     volumes:
-      - ../:/opt/airflow
-      - ./:/opt/airflow/data_pipeline_services
-      - ../airflow/requirements.txt:/requirements.txt
+      - ../airflow:/opt/airflow
+      - ../airflow/dags:/opt/airflow/dags
+      - ../airflow/logs:/opt/airflow/logs
+      - ../airflow/plugins:/opt/airflow/plugins
+      - ../airflow/requirements.txt:/opt/airflow/requirements.txt:ro
+      - /var/run/docker.sock:/var/run/docker.sock
     command: >
       bash -c "
-      pip install -r /requirements.txt &&
+      pip install -r /opt/airflow/requirements.txt &&
       airflow db init &&
       airflow users create --username admin --firstname Admin --lastname User --role Admin --email admin@example.com --password admin
       "
