@@ -11,7 +11,7 @@ from data_pipeline_services.data_ingestion.utils import (
   handle_general_error,
   filter_relevant_months,
 )
-from data_pipeline_services.config.variables import BASE_URL, TEAM_ABBREVIATIONS
+from data_pipeline_services.config.common.variables import BASE_URL, TEAM_ABBREVIATIONS
 
 def get_month_links(season: str) -> Optional[Tuple[List[Tuple[str, str]], int, int]]:
   """

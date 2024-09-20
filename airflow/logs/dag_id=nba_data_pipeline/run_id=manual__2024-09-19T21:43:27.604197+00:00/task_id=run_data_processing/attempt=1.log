@@ -1,0 +1,29 @@
+[2024-09-19T21:44:54.949+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2024-09-19T21:44:54.971+0000] {taskinstance.py:2612} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: nba_data_pipeline.run_data_processing manual__2024-09-19T21:43:27.604197+00:00 [queued]>
+[2024-09-19T21:44:54.982+0000] {taskinstance.py:2612} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: nba_data_pipeline.run_data_processing manual__2024-09-19T21:43:27.604197+00:00 [queued]>
+[2024-09-19T21:44:54.983+0000] {taskinstance.py:2865} INFO - Starting attempt 1 of 4
+[2024-09-19T21:44:55.001+0000] {taskinstance.py:2888} INFO - Executing <Task(DockerOperator): run_data_processing> on 2024-09-19 21:43:27.604197+00:00
+[2024-09-19T21:44:55.010+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'nba_data_pipeline', 'run_data_processing', 'manual__2024-09-19T21:43:27.604197+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/nba_data_pipeline.py', '--cfg-path', '/tmp/tmpmmq201ub']
+[2024-09-19T21:44:55.013+0000] {standard_task_runner.py:105} INFO - Job 11: Subtask run_data_processing
+[2024-09-19T21:44:55.015+0000] {logging_mixin.py:190} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=722) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2024-09-19T21:44:55.017+0000] {standard_task_runner.py:72} INFO - Started process 723 to run task
+[2024-09-19T21:44:55.075+0000] {task_command.py:467} INFO - Running <TaskInstance: nba_data_pipeline.run_data_processing manual__2024-09-19T21:43:27.604197+00:00 [running]> on host 19c433e2f996
+[2024-09-19T21:44:55.195+0000] {taskinstance.py:3131} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='nba_data_pipeline' AIRFLOW_CTX_TASK_ID='run_data_processing' AIRFLOW_CTX_EXECUTION_DATE='2024-09-19T21:43:27.604197+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-09-19T21:43:27.604197+00:00'
+[2024-09-19T21:44:55.196+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2024-09-19T21:44:55.229+0000] {docker.py:367} INFO - Starting docker container from image us-west1-docker.pkg.dev/nba-fantasy-ml/nba-data-pipeline-repo/data-processing:latest
+[2024-09-19T21:44:55.239+0000] {docker.py:375} WARNING - Using remote engine or docker-in-docker and mounting temporary volume from host is not supported. Falling back to `mount_tmp_dir=False` mode. You can set `mount_tmp_dir` parameter to False to disable mounting and remove the warning
+[2024-09-19T21:44:56.341+0000] {docker.py:438} INFO - 2024-09-19 21:44:56,340 - INFO - Starting data processing...
+[2024-09-19T21:44:56.345+0000] {docker.py:438} INFO - 2024-09-19 21:44:56,344 - INFO - Database connected.
+[2024-09-19T21:44:56.346+0000] {docker.py:438} INFO - 2024-09-19 21:44:56,344 - INFO - Cleaning and preprocessing data...
+[2024-09-19T21:44:56.389+0000] {docker.py:438} INFO - 2024-09-19 21:44:56,387 - INFO - Validation passed.
+[2024-09-19T21:44:56.390+0000] {docker.py:438} INFO - 2024-09-19 21:44:56,388 - INFO - Assigning unique IDs for players and games...
+[2024-09-19T21:44:56.551+0000] {docker.py:438} INFO - 2024-09-19 21:44:56,550 - INFO - Inserting player stats into database...
+[2024-09-19T21:44:56.560+0000] {docker.py:438} INFO - 2024-09-19 21:44:56,559 - ERROR - Error processing raw data: duplicate key value violates unique constraint "playerstats_pkey"
+[2024-09-19T21:44:56.561+0000] {docker.py:438} INFO - DETAIL:  Key (game_id, player_id)=(ffdecbe4171e4829937e63a32f0d0dad, 1) already exists.
+[2024-09-19T21:44:56.561+0000] {docker.py:438} INFO - 2024-09-19 21:44:56,559 - INFO - Database connection closed.
+[2024-09-19T21:44:56.562+0000] {docker.py:438} INFO - 2024-09-19 21:44:56,559 - ERROR - Data processing failed.
+[2024-09-19T21:44:56.796+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2024-09-19T21:44:56.797+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=nba_data_pipeline, task_id=run_data_processing, run_id=manual__2024-09-19T21:43:27.604197+00:00, execution_date=20240919T214327, start_date=20240919T214454, end_date=20240919T214456
+[2024-09-19T21:44:56.851+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2024-09-19T21:44:56.871+0000] {taskinstance.py:3900} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-09-19T21:44:56.873+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

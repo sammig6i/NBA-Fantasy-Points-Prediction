@@ -1,0 +1,13 @@
+scraping_job:
+  season: "2023-24"
+  start_date: "10-24" # MM-DD
+  end_date: "10-25" # MM-DD
+
+# if start_date and end_date empty
+default_nba_dates:
+  start: "10-01"
+  end: "06-30"
+
+minio:
+  output_dir: "player_box_scores"
+

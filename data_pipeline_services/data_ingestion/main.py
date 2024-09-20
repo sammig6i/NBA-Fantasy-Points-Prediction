@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 def main():
   try:
-    yaml_file = "/app/data_pipeline_services/config/scraping_config.yml"
+    yaml_file = "/app/data_pipeline_services/config/data_ingestion/scraping_config.yml"
 
     with open(yaml_file, "r") as file:
       config = yaml.safe_load(file)
@@ -63,15 +63,14 @@ def main():
       minio_client = get_minio_client()
       upload_to_minio(minio_client, df, bucket_name, object_name)
       logger.info(f"Data successfully uploaded to MinIO bucket '{bucket_name}' as '{object_name}'")
+      exit(0)
     except Exception as e:
       logger.error(f"Error uploading data to MinIO: {e}")
       exit(1)
 
-    logger.info("Data ingestion completed successfully")
-    return True
   except Exception as e:
     logger.error(f"Error in data ingestion: {str(e)}")
-    return False
+    exit(1)
 
 
 if __name__ == "__main__":

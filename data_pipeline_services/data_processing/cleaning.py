@@ -9,7 +9,7 @@ import psycopg2
 from dotenv import load_dotenv
 from psycopg2.extensions import connection
 
-from data_pipeline_services.config.variables import TEAM_ABBREVIATIONS
+from data_pipeline_services.config.common.variables import TEAM_ABBREVIATIONS
 from data_pipeline_services.data_processing.validate import validate_cleaned_data
 
 load_dotenv()

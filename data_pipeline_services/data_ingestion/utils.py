@@ -3,7 +3,7 @@ from typing import List, Tuple
 import unicodedata
 import time
 from datetime import datetime
-from data_pipeline_services.config.variables import MONTH_START_END_DATES
+from data_pipeline_services.config.common.variables import MONTH_START_END_DATES
 
 
 def normalize_name(name):

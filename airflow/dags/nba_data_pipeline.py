@@ -44,6 +44,7 @@ def nba_data_pipeline():
     auto_remove=True,
     docker_url="unix://var/run/docker.sock",
     environment=docker_env,
+    mount_tmp_dir=False,
   )
 
   data_processing = DockerOperator(
@@ -54,6 +55,7 @@ def nba_data_pipeline():
     auto_remove=True,
     docker_url="unix://var/run/docker.sock",
     environment=docker_env,
+    mount_tmp_dir=False,
   )
 
   data_ingestion >> data_processing
