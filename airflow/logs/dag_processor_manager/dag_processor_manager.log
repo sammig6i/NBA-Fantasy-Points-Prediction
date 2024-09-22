@@ -15052,3 +15052,65 @@ File Path                                 PID  Runtime      # DAGs    # Errors  
 /opt/airflow/dags/nba_data_pipeline.py    226  0.00s             1           0  0.19s           2024-09-20T02:38:27                      12
 ================================================================================
 [2024-09-20T02:39:25.052+0000] {manager.py:468} INFO - Exiting gracefully upon receiving signal 15
+[2024-09-22T23:03:37.456+0000] {manager.py:486} INFO - Processing files using up to 2 processes at a time 
+[2024-09-22T23:03:37.458+0000] {manager.py:487} INFO - Process each file at most once every 30 seconds
+[2024-09-22T23:03:37.458+0000] {manager.py:488} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2024-09-22T23:03:37.458+0000] {manager.py:832} INFO - Searching for files in /opt/airflow/dags
+[2024-09-22T23:03:37.463+0000] {manager.py:835} INFO - There are 1 files in /opt/airflow/dags
+[2024-09-22T23:03:37.870+0000] {manager.py:1008} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                 PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run      Last # of DB Queries
+--------------------------------------  -----  ---------  --------  ----------  --------------  ----------  ----------------------
+/opt/airflow/dags/nba_data_pipeline.py    190  0.02s             0           0                                                   0
+================================================================================
+[2024-09-22T23:04:08.081+0000] {manager.py:1008} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                               PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+--------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/nba_data_pipeline.py                           1           0  0.48s           2024-09-22T23:03:38                      45
+================================================================================
+[2024-09-22T23:04:38.779+0000] {manager.py:1008} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                 PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+--------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/nba_data_pipeline.py    206  0.00s             1           0  0.13s           2024-09-22T23:04:08                      12
+================================================================================
+[2024-09-22T23:05:09.079+0000] {manager.py:1008} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                 PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+--------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/nba_data_pipeline.py    211  0.00s             1           0  0.11s           2024-09-22T23:04:38                      12
+================================================================================
+[2024-09-22T23:05:39.319+0000] {manager.py:1008} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                 PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+--------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/nba_data_pipeline.py    216  0.00s             1           0  0.14s           2024-09-22T23:05:09                      12
+================================================================================
+[2024-09-22T23:06:09.550+0000] {manager.py:1008} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                 PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+--------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/nba_data_pipeline.py    227  0.00s             1           0  0.14s           2024-09-22T23:05:39                      12
+================================================================================
+[2024-09-22T23:06:39.896+0000] {manager.py:1008} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                 PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+--------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/nba_data_pipeline.py    232  0.00s             1           0  0.14s           2024-09-22T23:06:09                      12
+================================================================================
+[2024-09-22T23:07:03.096+0000] {manager.py:468} INFO - Exiting gracefully upon receiving signal 15
