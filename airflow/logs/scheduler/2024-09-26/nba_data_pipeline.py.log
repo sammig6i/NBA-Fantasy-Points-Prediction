@@ -1,0 +1,57 @@
+[2024-09-26T20:38:40.632+0000] {processor.py:186} INFO - Started process (PID=190) to work on /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:38:40.633+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/nba_data_pipeline.py for tasks to queue
+[2024-09-26T20:38:40.638+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:38:40.637+0000] {dagbag.py:587} INFO - Filling up the DagBag from /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:38:40.667+0000] {processor.py:925} INFO - DAG(s) 'nba_data_pipeline' retrieved from /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:38:41.000+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:38:40.999+0000] {override.py:1900} INFO - Created Permission View: can delete on DAG:nba_data_pipeline
+[2024-09-26T20:38:41.013+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:38:41.013+0000] {override.py:1900} INFO - Created Permission View: can edit on DAG:nba_data_pipeline
+[2024-09-26T20:38:41.020+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:38:41.020+0000] {override.py:1900} INFO - Created Permission View: can read on DAG:nba_data_pipeline
+[2024-09-26T20:38:41.027+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:38:41.027+0000] {override.py:1900} INFO - Created Permission View: menu access on DAG Run:nba_data_pipeline
+[2024-09-26T20:38:41.033+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:38:41.033+0000] {override.py:1900} INFO - Created Permission View: can delete on DAG Run:nba_data_pipeline
+[2024-09-26T20:38:41.039+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:38:41.039+0000] {override.py:1900} INFO - Created Permission View: can create on DAG Run:nba_data_pipeline
+[2024-09-26T20:38:41.045+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:38:41.045+0000] {override.py:1900} INFO - Created Permission View: can read on DAG Run:nba_data_pipeline
+[2024-09-26T20:38:41.046+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:38:41.046+0000] {dag.py:3229} INFO - Sync 1 DAGs
+[2024-09-26T20:38:41.064+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:38:41.064+0000] {dag.py:3252} INFO - Creating ORM DAG for nba_data_pipeline
+[2024-09-26T20:38:41.077+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:38:41.076+0000] {dag.py:4156} INFO - Setting next_dagrun for nba_data_pipeline to 2024-09-25 00:00:00+00:00, run_after=2024-09-26 00:00:00+00:00
+[2024-09-26T20:38:41.097+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/nba_data_pipeline.py took 0.473 seconds
+[2024-09-26T20:39:11.326+0000] {processor.py:186} INFO - Started process (PID=195) to work on /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:39:11.328+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/nba_data_pipeline.py for tasks to queue
+[2024-09-26T20:39:11.330+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:39:11.330+0000] {dagbag.py:587} INFO - Filling up the DagBag from /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:39:11.343+0000] {processor.py:925} INFO - DAG(s) 'nba_data_pipeline' retrieved from /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:39:11.383+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:39:11.383+0000] {dag.py:3229} INFO - Sync 1 DAGs
+[2024-09-26T20:39:11.424+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:39:11.423+0000] {dag.py:4156} INFO - Setting next_dagrun for nba_data_pipeline to 2024-09-25 00:00:00+00:00, run_after=2024-09-26 00:00:00+00:00
+[2024-09-26T20:39:11.452+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/nba_data_pipeline.py took 0.137 seconds
+[2024-09-26T20:39:41.533+0000] {processor.py:186} INFO - Started process (PID=203) to work on /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:39:41.534+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/nba_data_pipeline.py for tasks to queue
+[2024-09-26T20:39:41.536+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:39:41.536+0000] {dagbag.py:587} INFO - Filling up the DagBag from /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:39:41.548+0000] {processor.py:925} INFO - DAG(s) 'nba_data_pipeline' retrieved from /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:39:41.591+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:39:41.591+0000] {dag.py:3229} INFO - Sync 1 DAGs
+[2024-09-26T20:39:41.629+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:39:41.628+0000] {dag.py:4156} INFO - Setting next_dagrun for nba_data_pipeline to 2024-09-26 00:00:00+00:00, run_after=2024-09-27 00:00:00+00:00
+[2024-09-26T20:39:41.656+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/nba_data_pipeline.py took 0.132 seconds
+[2024-09-26T20:40:11.935+0000] {processor.py:186} INFO - Started process (PID=208) to work on /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:40:11.935+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/nba_data_pipeline.py for tasks to queue
+[2024-09-26T20:40:11.939+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:40:11.938+0000] {dagbag.py:587} INFO - Filling up the DagBag from /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:40:11.956+0000] {processor.py:925} INFO - DAG(s) 'nba_data_pipeline' retrieved from /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:40:11.990+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:40:11.989+0000] {dag.py:3229} INFO - Sync 1 DAGs
+[2024-09-26T20:40:12.022+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:40:12.021+0000] {dag.py:4156} INFO - Setting next_dagrun for nba_data_pipeline to 2024-09-26 00:00:00+00:00, run_after=2024-09-27 00:00:00+00:00
+[2024-09-26T20:40:12.047+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/nba_data_pipeline.py took 0.122 seconds
+[2024-09-26T20:40:42.164+0000] {processor.py:186} INFO - Started process (PID=213) to work on /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:40:42.165+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/nba_data_pipeline.py for tasks to queue
+[2024-09-26T20:40:42.168+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:40:42.168+0000] {dagbag.py:587} INFO - Filling up the DagBag from /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:40:42.181+0000] {processor.py:925} INFO - DAG(s) 'nba_data_pipeline' retrieved from /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:40:42.218+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:40:42.218+0000] {dag.py:3229} INFO - Sync 1 DAGs
+[2024-09-26T20:40:42.248+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:40:42.248+0000] {dag.py:4156} INFO - Setting next_dagrun for nba_data_pipeline to 2024-09-26 00:00:00+00:00, run_after=2024-09-27 00:00:00+00:00
+[2024-09-26T20:40:42.268+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/nba_data_pipeline.py took 0.114 seconds
+[2024-09-26T20:41:12.586+0000] {processor.py:186} INFO - Started process (PID=221) to work on /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:41:12.587+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/nba_data_pipeline.py for tasks to queue
+[2024-09-26T20:41:12.591+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:41:12.590+0000] {dagbag.py:587} INFO - Filling up the DagBag from /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:41:12.602+0000] {processor.py:925} INFO - DAG(s) 'nba_data_pipeline' retrieved from /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:41:12.635+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:41:12.635+0000] {dag.py:3229} INFO - Sync 1 DAGs
+[2024-09-26T20:41:12.667+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:41:12.667+0000] {dag.py:4156} INFO - Setting next_dagrun for nba_data_pipeline to 2024-09-26 00:00:00+00:00, run_after=2024-09-27 00:00:00+00:00
+[2024-09-26T20:41:12.691+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/nba_data_pipeline.py took 0.114 seconds
+[2024-09-26T20:41:42.852+0000] {processor.py:186} INFO - Started process (PID=226) to work on /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:41:42.853+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/nba_data_pipeline.py for tasks to queue
+[2024-09-26T20:41:42.856+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:41:42.856+0000] {dagbag.py:587} INFO - Filling up the DagBag from /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:41:42.868+0000] {processor.py:925} INFO - DAG(s) 'nba_data_pipeline' retrieved from /opt/airflow/dags/nba_data_pipeline.py
+[2024-09-26T20:41:42.901+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:41:42.901+0000] {dag.py:3229} INFO - Sync 1 DAGs
+[2024-09-26T20:41:42.929+0000] {logging_mixin.py:190} INFO - [2024-09-26T20:41:42.929+0000] {dag.py:4156} INFO - Setting next_dagrun for nba_data_pipeline to 2024-09-26 00:00:00+00:00, run_after=2024-09-27 00:00:00+00:00
+[2024-09-26T20:41:42.951+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/nba_data_pipeline.py took 0.110 seconds
