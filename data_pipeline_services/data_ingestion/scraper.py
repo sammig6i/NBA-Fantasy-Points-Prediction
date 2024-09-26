@@ -1,17 +1,20 @@
+import random
+import time
 from datetime import datetime
 from typing import List, Optional, Tuple
+
+import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-import time
-import pandas as pd
-import random
-from data_pipeline_services.data_ingestion.utils import (
-  normalize_name, 
-  handle_http_error, 
-  handle_general_error,
-  filter_relevant_months,
-)
+
 from data_pipeline_services.config.common.variables import BASE_URL, TEAM_ABBREVIATIONS
+from data_pipeline_services.data_ingestion.utils import (
+  filter_relevant_months,
+  handle_general_error,
+  handle_http_error,
+  normalize_name,
+)
+
 
 def get_month_links(season: str) -> Optional[Tuple[List[Tuple[str, str]], int, int]]:
   """
@@ -30,49 +33,50 @@ def get_month_links(season: str) -> Optional[Tuple[List[Tuple[str, str]], int, i
     Or None if there's an error.
   """
   try:
-    start_year, end_year = season.split('-') # 2021-22
+    start_year, end_year = season.split("-")  # 2021-22
     start_year_full = int(start_year)
     if len(end_year) != 2 or not end_year.isdigit():
       raise ValueError
-  except(ValueError, AttributeError):
+  except (ValueError, AttributeError):
     print(f"Invalid season format: {season}. Expected format is 'YYYY-YY'.")
     return None
 
-  end_year_full = start_year_full + 1 if end_year == '00' else int(str(start_year_full)[:2] + end_year)
-  
+  end_year_full = start_year_full + 1 if end_year == "00" else int(str(start_year_full)[:2] + end_year)
+
   start_url = f"{BASE_URL}/leagues/NBA_{end_year_full}_games.html"
 
   month_link_list = []
   try:
     response = requests.get(start_url)
     response.raise_for_status()
-    
-    soup = BeautifulSoup(response.text, 'html.parser')
-    body = soup.find('body')
 
-    div_elements = body.find_all('div', class_='filter')
+    soup = BeautifulSoup(response.text, "html.parser")
+    body = soup.find("body")
+
+    div_elements = body.find_all("div", class_="filter")
     for div in div_elements:
-      a_tags = div.find_all('a', href=True)
+      a_tags = div.find_all("a", href=True)
       for a_tag in a_tags:
         link_text = a_tag.text.strip().lower()
         if any(month in link_text for month in a_tag.text.strip().lower().split()):
           month_link_list.append((link_text, f"{BASE_URL}{a_tag['href']}"))
-    
+
     return month_link_list, start_year_full, end_year_full
   except requests.exceptions.HTTPError:
     handle_http_error(response)
   except Exception as e:
     handle_general_error(e, start_url)
-  
+
   return None
 
 
-def get_box_score_links(month_link_list: List[Tuple[str, str]], 
-                        start_date: Optional[str], 
-                        end_date: Optional[str],
-                        start_year: int,
-                        end_year: int,
-                        ) -> Tuple[Optional[List[List[str]]], Optional[List[List[str]]]]:
+def get_box_score_links(
+  month_link_list: List[Tuple[str, str]],
+  start_date: Optional[str],
+  end_date: Optional[str],
+  start_year: int,
+  end_year: int,
+) -> Tuple[Optional[List[List[str]]], Optional[List[List[str]]]]:
   """
   Fetches box score links and corresponding game dates within a given date range (for batch scraping).
 
@@ -92,14 +96,14 @@ def get_box_score_links(month_link_list: List[Tuple[str, str]],
     Or (None, None) if there's an error.
   """
   try:
-    start_date_dt = datetime.strptime(start_date, '%Y-%m-%d') if start_date else None
-    end_date_dt = datetime.strptime(end_date, '%Y-%m-%d') if end_date else None
-      
+    start_date_dt = datetime.strptime(start_date, "%Y-%m-%d") if start_date else None
+    end_date_dt = datetime.strptime(end_date, "%Y-%m-%d") if end_date else None
+
     if start_date_dt and end_date_dt and start_date_dt > end_date_dt:
       raise ValueError("Start date cannot be after end date.")
 
-    relevant_month_link_list = filter_relevant_months(month_link_list, start_date_dt, end_date_dt, start_year, end_year) 
-    
+    relevant_month_link_list = filter_relevant_months(month_link_list, start_date_dt, end_date_dt, start_year, end_year)
+
     box_link_array = []
     all_dates = []
 
@@ -109,23 +113,23 @@ def get_box_score_links(month_link_list: List[Tuple[str, str]],
       try:
         response = requests.get(page)
         response.raise_for_status()
-        soup = BeautifulSoup(response.text, 'html.parser')
+        soup = BeautifulSoup(response.text, "html.parser")
 
-        rows = soup.find_all('tr')
+        rows = soup.find_all("tr")
         for row in rows:
-          date_cell = row.find('th', attrs={'data-stat': 'date_game'})
-          if date_cell and date_cell.has_attr('csk'):
-            game_date_str = date_cell['csk'][:8]
-            game_date_dt = datetime.strptime(game_date_str, '%Y%m%d')
+          date_cell = row.find("th", attrs={"data-stat": "date_game"})
+          if date_cell and date_cell.has_attr("csk"):
+            game_date_str = date_cell["csk"][:8]
+            game_date_dt = datetime.strptime(game_date_str, "%Y%m%d")
 
             if (start_date_dt and end_date_dt) and not (start_date_dt <= game_date_dt <= end_date_dt):
               continue
 
-            box_score_cell = row.find('td', attrs={'data-stat': 'box_score_text'})
-            if box_score_cell and box_score_cell.find('a', href=True):
+            box_score_cell = row.find("td", attrs={"data-stat": "box_score_text"})
+            if box_score_cell and box_score_cell.find("a", href=True):
               box_score_link = f"{BASE_URL}{box_score_cell.find('a')['href']}"
               page_link_list.append(box_score_link)
-              page_date_list.append(game_date_dt.strftime('%Y-%m-%d'))
+              page_date_list.append(game_date_dt.strftime("%Y-%m-%d"))
 
         if page_link_list:
           box_link_array.append(page_link_list)
@@ -147,14 +151,12 @@ def get_box_score_links(month_link_list: List[Tuple[str, str]],
     handle_general_error(ve, "Value error occurred")
   except Exception as e:
     handle_general_error(e, "An unexpected error occurred")
-  
+
   return None, None
 
 
 # from https://medium.com/@HeeebsInc/using-machine-learning-to-predict-daily-fantasy-basketball-scores-part-i-811de3c54a98
-def extract_player_data(box_links: List[List[str]], 
-                        all_dates: List[List[str]]
-                        ) -> pd.DataFrame:
+def extract_player_data(box_links: List[List[str]], all_dates: List[List[str]]) -> pd.DataFrame:
   """
   Extract player statistics from each box score link and save the data to a DataFrame.
 
@@ -166,51 +168,79 @@ def extract_player_data(box_links: List[List[str]],
     stat_df (pd.DataFrame): A DataFrame containing the extracted player statistics.
   """
   df_columns = [
-                'Date', 'Name', 'Team', 'Opponent', 'MP', 'FG', 'FGA', 'FG%', '3P', '3PA',
-                '3P%','FT', 'FTA', 'FT%', 'ORB','DRB', 'TRB', 'AST', 'STL', 'BLK', 
-                'TOV', 'PF', 'PTS', 'GmSc', '+-', 'GameLink', 'Home'
-               ]
-  
+    "Date",
+    "Name",
+    "Team",
+    "Opponent",
+    "MP",
+    "FG",
+    "FGA",
+    "FG%",
+    "3P",
+    "3PA",
+    "3P%",
+    "FT",
+    "FTA",
+    "FT%",
+    "ORB",
+    "DRB",
+    "TRB",
+    "AST",
+    "STL",
+    "BLK",
+    "TOV",
+    "PF",
+    "PTS",
+    "GmSc",
+    "+-",
+    "GameLink",
+    "Home",
+  ]
+
   stat_df = pd.DataFrame(columns=df_columns)
 
   for i, (links, dates) in enumerate(zip(box_links, all_dates)):
-    print(f'Processing batch {i+1}/{len(box_links)}')
+    print(f"Processing batch {i+1}/{len(box_links)}")
 
     for link, date in zip(links, dates):
-      print(f'Scraping box score: {link} for game date {date}')
-      
+      print(f"Scraping box score: {link} for game date {date}")
+
       try:
         response = requests.get(link)
         response.raise_for_status()
         response.encoding = response.apparent_encoding
-        soup = BeautifulSoup(response.text, 'html.parser')
+        soup = BeautifulSoup(response.text, "html.parser")
 
-        home_team_abbr = link.split('/')[-1].split('.')[0][-3:]  # e.g. https://www.basketball-reference.com/boxscores/202310240DEN.html
+        home_team_abbr = link.split("/")[-1].split(".")[0][
+          -3:
+        ]  # e.g. https://www.basketball-reference.com/boxscores/202310240DEN.html
         home_team = TEAM_ABBREVIATIONS.get(home_team_abbr, None)
 
-        tables = soup.find_all('table', id=lambda x: x and x.endswith('-game-basic'))
-        team_names = [table.find('caption').text.split(' Basic and Advanced Stats Table')[0].strip() for table in tables]
+        tables = soup.find_all("table", id=lambda x: x and x.endswith("-game-basic"))
+        team_names = [
+          table.find("caption").text.split(" Basic and Advanced Stats Table")[0].strip() for table in tables
+        ]
         for table in tables:
-          team_name = table.find('caption').text.split(' Basic and Advanced Stats Table')[0].strip()
+          team_name = table.find("caption").text.split(" Basic and Advanced Stats Table")[0].strip()
           opponent_name = team_names[1] if team_names[0] == team_name else team_names[0]
-          rows = table.find('tbody').find_all('tr')
+          rows = table.find("tbody").find_all("tr")
 
           is_home = 1 if team_name == home_team else 0
 
           for row in rows:
-            if row.find('th').text in ['Team Totals', 'Reserves']:
+            if row.find("th").text in ["Team Totals", "Reserves"]:
               continue
-            player_name = normalize_name(row.find('th').text.strip())
+            player_name = normalize_name(row.find("th").text.strip())
 
             stats = [date, player_name, team_name, opponent_name]
 
-            dnp = row.find('td', {'data-stat': 'reason'})
-            if dnp and 'Did Not Play' in dnp.text:
-              stats += ['DNP'] * (len(df_columns) - 6)
+            dnp = row.find("td", {"data-stat": "reason"})
+            if dnp and "Did Not Play" in dnp.text:
+              stats += ["DNP"] * (len(df_columns) - 6)
             else:
-              for td in row.find_all('td'):
-                stats.append(td.text.strip() or '0')
-            
+              for td in row.find_all("td"):
+                stats.append(td.text.strip() or "0")
+
             stats.append(link)
             stats.append(is_home)
 
@@ -218,13 +248,13 @@ def extract_player_data(box_links: List[List[str]],
               new_row = pd.DataFrame([stats], columns=df_columns)
               stat_df = pd.concat([stat_df, new_row], ignore_index=True)
             else:
-              print(f'Skipping incomplete data for {player_name}')
+              print(f"Skipping incomplete data for {player_name}")
 
       except requests.exceptions.HTTPError:
         handle_http_error(response)
       except Exception as e:
         handle_general_error(e, link)
-      
+
       time.sleep(random.uniform(3, 7))
 
   return stat_df
